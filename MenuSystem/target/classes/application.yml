@@ -1,0 +1,57 @@
+server:
+  port: 8080
+
+spring:
+  jpa:
+    show-sql: true
+    defer-datasource-initialization: true
+  datasource:
+    url: jdbc:h2:mem:menudb
+  h2:
+    console:
+      enabled: true
+
+
+#spring:
+#  datasource:
+#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+##    url: jdbc:sqlserver://127.0.0.1:1433;DatabaseName=TEST_DATABASE
+##    username: test
+##    password: 114514
+#    url: jdbc:sqlserver://106.12.143.184:1433;DatabaseName=Account
+##    url: jdbc:sqlserver://127.0.0.1:1433;DatabaseName=Account
+#    username: sa
+#    password: SG666666!
+#  #    hikari:
+#  #      connection-test-query: select 1
+#  mvc:
+#    static-path-pattern: /static/**
+#    resources:
+#      chain:
+#        strategy:
+#          content:
+#            enabled: true
+#            paths: /**
+#
+#  jpa:
+#    database: sql_server
+#    show-sql: true
+#
+#
+#    hibernate:
+#      naming:
+#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+#      ddl-auto: update
+#    database-platform: org.hibernate.dialect.SQLServerDialect
+#
+#
+#  #      ddl-auto: update
+#  main:
+#    allow-bean-definition-overriding: true
+#
+#logging:
+#  level:
+#    # ??????
+#    org.hibernate.type.descriptor.sql.BasicBinder: trace
+#    # ??????
+#    org.hibernate.metamodel.model.convert.internal.NamedEnumValueConverter: trace
