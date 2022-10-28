@@ -7,9 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="UserManagement" />
-        <module name="MacDrop" />
+        <module name="Bookstore" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Menu_System" target="19" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
