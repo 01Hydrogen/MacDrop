@@ -31,3 +31,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+compiler.xml
+encodings.xml
+jpa-buddy.xml
+misc.xml
+vcs.xml
+runConfifurations.xml
