@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.Luckystar</groupId>
-    <artifactId>User</artifactId>
+    <artifactId>UserManagement</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>User</name>
+    <name>UserManagement</name>
     <description>User</description>
     <properties>
         <java.version>1.8</java.version>
