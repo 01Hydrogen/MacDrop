@@ -26,6 +26,9 @@ public class UserEntity {
         if (null!=userDTO.getId()){
             this.id=userDTO.getId();
         }
+        if(null!=userDTO.getMacId()){
+            this.macId=userDTO.getMacId();
+        }
         if(null!=userDTO.getUsername()){
             this.username=userDTO.getUsername();
         }
@@ -36,16 +39,24 @@ public class UserEntity {
         if (null!=userDTO.getEmailAddress()){
             this.emailAddress=userDTO.getEmailAddress();
         }
-        this.MMD=0;
+        if(userDTO.getMMD()!=0){
+            this.MMD=userDTO.getMMD();
+        }
     }
 
     /**
-     * 用户ID，学生使用MacID
+     * 用户ID
      */
     @Id
     @Column(name = "ID",length = 32)
     @GeneratedValue(generator = "jpa-uuid")
     private String id;
+
+    /**
+     * 学生填写MacID
+     */
+    @Column(name = "MAC_ID")
+    private String macId;
 
     /**
      * 用户名

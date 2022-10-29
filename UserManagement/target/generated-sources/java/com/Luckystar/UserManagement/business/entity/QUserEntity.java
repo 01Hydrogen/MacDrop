@@ -23,6 +23,8 @@ public class QUserEntity extends EntityPathBase<UserEntity> {
 
     public final StringPath id = createString("id");
 
+    public final StringPath macId = createString("macId");
+
     public final NumberPath<Double> MMD = createNumber("MMD", Double.class);
 
     public final StringPath password = createString("password");

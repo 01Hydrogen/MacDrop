@@ -2,7 +2,7 @@ package com.Luckystar.UserManagement.ports;
 
 import com.Luckystar.UserManagement.dto.UserDTO;
 
-public interface IUserLoginService {
+public interface IUserMDDConsumeService {
 
-    UserDTO Login(UserDTO userDTO) throws Exception;
+    boolean MDDConsume(UserDTO userDTO);
 }

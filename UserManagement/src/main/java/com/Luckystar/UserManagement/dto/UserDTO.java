@@ -8,6 +8,8 @@ public class UserDTO {
 
     private String id;
 
+    private String macId;
+
     private String username;
 
     private int type;
