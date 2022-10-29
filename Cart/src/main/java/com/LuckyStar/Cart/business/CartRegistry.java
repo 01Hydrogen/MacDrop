@@ -19,4 +19,11 @@ public class CartRegistry implements CartFinder {
     public List<Cart> findAll() {
         return repository.findAll();
     }
+
+    @Override
+    public List<Cart> findByUserId(String user_id) {
+        return repository.findByUserId(user_id);
+    }
+
+
 }

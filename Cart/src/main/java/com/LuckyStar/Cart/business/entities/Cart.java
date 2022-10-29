@@ -9,13 +9,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-@NoArgsConstructor
 @RequiredArgsConstructor
+@NoArgsConstructor
+
 @Getter
 @Setter
 @ToString
 @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
 public class Cart {
+    public Cart(String id, @NonNull String userId, String menuId, Integer amount) {
+        this.id = id;
+        this.userId = userId;
+        this.menuId = menuId;
+        this.amount = amount;
+    }
+
     @Id @GeneratedValue(generator = "jpa-uuid")
     private String id;
     @NonNull @Column(name = "user_Id")
@@ -24,6 +32,8 @@ public class Cart {
     private String menuId;
 
     private Integer amount;
+
+
 }
 
 

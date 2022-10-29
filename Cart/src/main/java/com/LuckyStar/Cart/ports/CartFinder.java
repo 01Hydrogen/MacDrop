@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface CartFinder {
     List<Cart> findAll();
+    List<Cart> findByUserId(String user_id);
 }
