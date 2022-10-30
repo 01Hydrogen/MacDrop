@@ -22,4 +22,11 @@ public class MenuRegistry implements MenuFinder {
     public List<Menu> findAll() {
         return repository.findAll();
     }
+
+    @Override
+    public List<Menu> findByResId(String res_id) {
+        return repository.findByResId(res_id);
+    }
+
+
 }

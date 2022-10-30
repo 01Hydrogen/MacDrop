@@ -23,7 +23,7 @@ public class MenuManager implements MenuManagement {
         if (!Objects.isNull(menu.getId())){
             return menuRepository.findById(menu.getId()).isPresent();
         }
-        return menuRepository.findByResId(menu.getResId()).size() > 0;
+        return menuRepository.findByResIdAndName(menu.getResId(), menu.getName()).size() > 0;
     }
 
     @Override
@@ -38,7 +38,18 @@ public class MenuManager implements MenuManagement {
     }
 
     @Override
-    public void delete(MenuDeletionRequest del) {
+    public void delete(String id) {
+        if(menuRepository.findById(id) == null){
+            throw new FoodNotFoundException(id);
+        }
+        menuRepository.deleteById(id);
+    }
 
+    @Override
+    public void deleteByResId(String res_id) {
+        if(menuRepository.findByResId(res_id).size() < 1){
+            throw new MenuNotFoundException(res_id);
+        }
+        menuRepository.deleteAllByResId(res_id);
     }
 }

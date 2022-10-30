@@ -28,6 +28,8 @@ public class Cart {
     private String id;
     @NonNull @Column(name = "user_Id")
     private String userId;
+    @NonNull @Column(name = "res_Id")
+    private String resId;
     @Column(name = "menu_Id")
     private String menuId;
 
