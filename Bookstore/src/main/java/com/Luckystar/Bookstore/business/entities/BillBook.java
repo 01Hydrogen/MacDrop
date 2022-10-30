@@ -1,4 +1,4 @@
-package com.LuckyStar.Bookstore.business.entities;
+package com.Luckystar.Bookstore.business.entities;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;

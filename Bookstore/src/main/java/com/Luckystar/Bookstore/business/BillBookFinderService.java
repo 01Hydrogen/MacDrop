@@ -1,12 +1,11 @@
-package com.LuckyStar.Bookstore.business;
+package com.Luckystar.Bookstore.business;
 
-import com.LuckyStar.Bookstore.business.entities.BillBook;
-import com.LuckyStar.Bookstore.ports.IBillBookFinderService;
-import com.LuckyStar.Bookstore.ports.IBillBookRepository;
+import com.Luckystar.Bookstore.business.entities.BillBook;
+import com.Luckystar.Bookstore.ports.IBillBookFinderService;
+import com.Luckystar.Bookstore.ports.IBillBookRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Service

@@ -1,7 +1,7 @@
-package com.LuckyStar.Bookstore.ports;
+package com.Luckystar.Bookstore.ports;
 
-import com.LuckyStar.Bookstore.business.entities.BillBook;
-import com.LuckyStar.Bookstore.dto.BillBookDTO;
+import com.Luckystar.Bookstore.business.entities.BillBook;
+import com.Luckystar.Bookstore.dto.BillBookDTO;
 
 public interface IBillBookLogService {
   /**

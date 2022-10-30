@@ -1,4 +1,4 @@
-package com.LuckyStar.Bookstore.dto;
+package com.Luckystar.Bookstore.dto;
 
 public class InvoiceDTO {
 

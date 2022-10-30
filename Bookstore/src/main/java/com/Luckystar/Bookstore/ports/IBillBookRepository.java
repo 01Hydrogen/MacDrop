@@ -1,10 +1,9 @@
-package com.LuckyStar.Bookstore.ports;
+package com.Luckystar.Bookstore.ports;
 
-import com.LuckyStar.Bookstore.business.entities.BillBook;
+import com.Luckystar.Bookstore.business.entities.BillBook;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 public interface IBillBookRepository extends JpaRepository<BillBook, String> {

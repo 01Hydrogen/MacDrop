@@ -1,6 +1,6 @@
-package com.LuckyStar.Bookstore.ports;
+package com.Luckystar.Bookstore.ports;
 
-import com.LuckyStar.Bookstore.dto.InvoiceDTO;
+import com.Luckystar.Bookstore.dto.InvoiceDTO;
 
 import java.util.List;
 

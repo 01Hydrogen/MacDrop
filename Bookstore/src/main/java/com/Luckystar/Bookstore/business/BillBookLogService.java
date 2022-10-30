@@ -1,9 +1,9 @@
-package com.LuckyStar.Bookstore.business;
+package com.Luckystar.Bookstore.business;
 
 import com.LuckyStar.Bookstore.business.entities.*;
-import com.LuckyStar.Bookstore.dto.BillBookDTO;
-import com.LuckyStar.Bookstore.ports.IBillBookLogService;
-import com.LuckyStar.Bookstore.ports.IBillBookRepository;
+import com.Luckystar.Bookstore.dto.BillBookDTO;
+import com.Luckystar.Bookstore.ports.IBillBookLogService;
+import com.Luckystar.Bookstore.ports.IBillBookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

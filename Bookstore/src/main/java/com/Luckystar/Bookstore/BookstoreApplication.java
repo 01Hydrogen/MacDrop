@@ -1,4 +1,4 @@
-package com.LuckyStar.Bookstore;
+package com.Luckystar.Bookstore;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
