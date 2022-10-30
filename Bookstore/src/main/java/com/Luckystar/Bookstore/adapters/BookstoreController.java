@@ -2,14 +2,12 @@ package com.LuckyStar.Bookstore.adapters;
 
 import com.LuckyStar.Bookstore.business.BillBookLogService;
 import com.LuckyStar.Bookstore.business.entities.BillBook;
-import com.LuckyStar.Bookstore.ports.IBillBookFinderService;
-import com.LuckyStar.Bookstore.ports.IBillBookLogService;
-import com.LuckyStar.Bookstore.ports.IBillBookRepository;
+import com.LuckyStar.Bookstore.dto.InvoiceDTO;
+import com.LuckyStar.Bookstore.ports.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import com.LuckyStar.Bookstore.dto.BillBookDTO;
 import com.LuckyStar.Bookstore.business.entities.Item;
-import com.LuckyStar.Bookstore.ports.IItemFinderService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
@@ -24,12 +22,16 @@ public class BookstoreController {
   private final IItemFinderService itemRegistry;
   private final IBillBookLogService logService;
   private final IBillBookFinderService billRegistry;
+  private final IInvoiceGenerateService invoiceGenrator;
 
   @Autowired
-  public BookstoreController(IItemFinderService itemRegistry, IBillBookLogService logService, IBillBookFinderService billRegistry){
+  public BookstoreController(IItemFinderService itemRegistry, IBillBookLogService logService,
+                             IBillBookFinderService billRegistry,IInvoiceGenerateService invoiceGenrator){
     this.itemRegistry = itemRegistry;
     this.logService = logService;
     this.billRegistry = billRegistry;
+    this.invoiceGenrator = invoiceGenrator;
+
   }
 
   @GetMapping(ENDPOINT+"/itemFindAll"+"/{item}")
@@ -56,5 +58,10 @@ public class BookstoreController {
   @PostMapping(ENDPOINT+"/{log}")
   public BillBook log(@RequestBody BillBookDTO billBookDTO){
     return logService.log(billBookDTO);
+  }
+
+  @GetMapping(ENDPOINT+"/invoice")
+  public List<InvoiceDTO> findInvoice() {
+    return invoiceGenrator.findInvoice();
   }
 }
