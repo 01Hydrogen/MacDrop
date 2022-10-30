@@ -45,7 +45,7 @@ public class UserEntity {
     }
 
     /**
-     * 用户ID
+     * 自动生成ID
      */
     @Id
     @Column(name = "ID",length = 32)
