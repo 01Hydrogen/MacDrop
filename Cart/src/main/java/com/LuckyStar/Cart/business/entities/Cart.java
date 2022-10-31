@@ -11,14 +11,15 @@ import javax.persistence.Id;
 @Entity
 @RequiredArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 
 @Getter
 @Setter
 @ToString
 @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
 public class Cart {
-    public Cart(String id, @NonNull String userId, String menuId, Integer amount) {
-        this.id = id;
+    public Cart(String res_id, @NonNull String userId, String menuId, Integer amount) {
+        this.resId = res_id;
         this.userId = userId;
         this.menuId = menuId;
         this.amount = amount;

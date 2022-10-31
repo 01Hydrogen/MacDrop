@@ -2,6 +2,7 @@ package com.LuckyStar.Cart.adapters;
 
 import com.LuckyStar.Cart.business.entities.Cart;
 import com.LuckyStar.Cart.dto.CartRegistrationRequest;
+import com.LuckyStar.Cart.dto.UserInfoDTO;
 import com.LuckyStar.Cart.ports.CartFinder;
 import com.LuckyStar.Cart.ports.CartManagement;
 import com.LuckyStar.Cart.ports.ICartCheckOutService;
@@ -81,11 +82,11 @@ public class CartController {
 
     /**
      * User Check Out Cart
-     * @param user_id
+     * @param userInfoDTO
      * @return
      */
-    @PostMapping(ENDPOINT+"/{user_id}")
-    public CartCheckOutDTO cartCheckOut(String user_id){
-        return cartCheckOut.cartCheckOut(user_id);
+    @PostMapping(ENDPOINT+"/checkout")
+    public CartCheckOutDTO cartCheckOut(@RequestBody UserInfoDTO userInfoDTO){
+        return cartCheckOut.cartCheckOut(userInfoDTO);
     }
 }

@@ -17,6 +17,10 @@ public class CartPriceDTO implements Serializable {
     @NonNull
     private String menuId;
     @NonNull
+    private String resId;
+    @NonNull
     private Integer amount;
+    @NonNull
+    private String name;
 
 }

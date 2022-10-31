@@ -16,6 +16,9 @@ public class CartRegistrationRequest {
     @NonNull @JsonProperty("user_id")
     private String userId;
     @NonNull
+    @JsonProperty("res_Id")
+    private String resId;
+    @NonNull
     @JsonProperty("menu_Id")
     private String menuId;
     @NonNull

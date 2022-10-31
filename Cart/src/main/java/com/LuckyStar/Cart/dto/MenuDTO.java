@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-public class menuDTO implements Serializable {
+public class MenuDTO implements Serializable {
     @NonNull
     private String id;
     @NonNull

@@ -3,6 +3,7 @@ package com.LuckyStar.Cart.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 @ToString
@@ -10,14 +11,12 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CartCheckOutDTO {
+public class CartCheckOutDTO implements Serializable {
     @NonNull
-    private List<CartPriceDTO> carts;
+    private List<ResOrdersDTO> restaurantOrders;
     @NonNull
     private Double totalPrice;
-    @NonNull @JsonProperty("user_id")
+    @NonNull
     private String userId;
-
-
 
 }

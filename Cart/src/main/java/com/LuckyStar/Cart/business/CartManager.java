@@ -1,9 +1,7 @@
 package com.LuckyStar.Cart.business;
 
 import com.LuckyStar.Cart.business.entities.Cart;
-import com.LuckyStar.Cart.dto.CartAllDeletionRequest;
 import com.LuckyStar.Cart.dto.CartRegistrationRequest;
-import com.LuckyStar.Cart.dto.CartSingleDeletionRequest;
 import com.LuckyStar.Cart.ports.CartManagement;
 import com.LuckyStar.Cart.ports.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +28,7 @@ public class CartManager implements CartManagement {
 
     @Override
     public Cart add(CartRegistrationRequest cart){
-        Cart singleCart = new Cart(cart.getId(),cart.getUserId() ,cart.getMenuId(),cart.getAmount());
+        Cart singleCart = new Cart(cart.getId(),cart.getUserId(), cart.getResId() ,cart.getMenuId(),cart.getAmount());
         if(exists(singleCart)) {
             throw new IllegalArgumentException("cart Already exists");
         }
