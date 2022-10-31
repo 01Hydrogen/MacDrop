@@ -85,6 +85,6 @@ public class UserEntity {
     /**
      * McMasterDollar
      */
-    @Column(name = "MMD")
+    @Column(name = "MDD")
     private double MMD;
 }

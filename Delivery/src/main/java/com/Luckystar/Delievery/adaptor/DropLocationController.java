@@ -130,6 +130,10 @@ public class DropLocationController {
         }
     }
 
+    /**
+     * 手动重新创建dropLocationStatusBeans，服务器崩溃时使用
+     * @return
+     */
     @RequestMapping(value = "/testFunction",method = RequestMethod.GET)
     @ResponseBody
     public String testFunction(){

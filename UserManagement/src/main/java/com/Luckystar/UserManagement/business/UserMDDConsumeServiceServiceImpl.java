@@ -17,7 +17,7 @@ public class UserMDDConsumeServiceServiceImpl implements IUserMDDConsumeService 
 
 
     /**
-     * 消费MDD方法
+     * 消费MMD方法
      * @param userDTO
      * @return
      */
@@ -41,6 +41,27 @@ public class UserMDDConsumeServiceServiceImpl implements IUserMDDConsumeService 
                 return true;
             }
         }
+    }
 
+    /**
+     * 增加MMD
+     * @param userDTO
+     * @return
+     */
+    @Override
+    public boolean MDDAdd(UserDTO userDTO) {
+        String macId=userDTO.getMacId();
+        double MMD=userDTO.getMMD();
+        //查询学生，学生不存在则返回false
+        List<UserEntity> userEntities =userRepository.findByMacId(macId);
+        if(userEntities.size()==0){
+            return false;
+        }else {
+            //学生存在则加钱
+            UserEntity userEntity=userEntities.get(0);
+            userEntity.setMMD(userEntity.getMMD()+MMD);
+            userRepository.save(userEntity);
+        }
+        return true;
     }
 }

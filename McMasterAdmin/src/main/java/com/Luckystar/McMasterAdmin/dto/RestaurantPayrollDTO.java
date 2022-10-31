@@ -10,10 +10,10 @@ import java.util.List;
 @Setter
 public class RestaurantPayrollDTO {
     @NonNull
-    private String order_id;
+    private String orderId;
 
     @NonNull
-    private String student_id;
+    private String studentId;
 
     @NonNull
     private List<MenuInfoDTO> menuInfoDTOList; // Json Object:

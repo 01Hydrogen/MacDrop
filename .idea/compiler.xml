@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="EurekaServer" />
         <module name="PaymentSystem" />
+        <module name="User" />
         <module name="Bookstore" />
         <module name="McMasterAdmin" />
         <module name="UserManagement" />
@@ -34,6 +35,7 @@
       <module name="MenuSystem" options="-parameters" />
       <module name="PaymentSystem" options="-parameters" />
       <module name="TrackingSystem" options="-parameters" />
+      <module name="User" options="-parameters" />
       <module name="UserManagement" options="-parameters" />
     </option>
   </component>
