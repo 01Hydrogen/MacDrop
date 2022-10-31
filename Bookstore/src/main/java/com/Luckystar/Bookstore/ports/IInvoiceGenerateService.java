@@ -1,9 +1,9 @@
-package com.LuckyStar.Bookstore.ports;
-
-import com.LuckyStar.Bookstore.dto.InvoiceDTO;
+package com.Luckystar.Bookstore.ports;
 
 import java.util.List;
 
 public interface IInvoiceGenerateService {
-  List<InvoiceDTO> findInvoice();
+
+  List generateInvoice();
+
 }

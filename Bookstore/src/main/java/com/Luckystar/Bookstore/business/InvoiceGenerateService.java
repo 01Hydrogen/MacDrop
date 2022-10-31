@@ -1,34 +1,61 @@
-package com.LuckyStar.Bookstore.business;
+package com.Luckystar.Bookstore.business;
 
-import com.LuckyStar.Bookstore.business.entities.QBillBook;
-import com.LuckyStar.Bookstore.business.entities.QItem;
-import com.LuckyStar.Bookstore.dto.InvoiceDTO;
-import com.LuckyStar.Bookstore.ports.IInvoiceGenerateService;
-import com.querydsl.core.Tuple;
-import com.querydsl.jpa.impl.JPAQuery;
-import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.Luckystar.Bookstore.business.entities.BillBook;
+import com.Luckystar.Bookstore.dto.InvoiceDTO;
+import com.Luckystar.Bookstore.ports.IBillBookRepository;
+import com.Luckystar.Bookstore.ports.IInvoiceGenerateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+
 
 @Service
 public class InvoiceGenerateService implements IInvoiceGenerateService {
-
   @Autowired
-  JPAQueryFactory jpaQueryFactory;
+  private final IBillBookRepository billBookRepository;
+
+
+  public InvoiceGenerateService(IBillBookRepository billBookRepository){
+    this.billBookRepository = billBookRepository;
+  }
 
   @Override
-  public List<InvoiceDTO> findInvoice() {
-    QBillBook qBillBook=QBillBook.billBook;
-    QItem qItem=QItem.item;
+  public List generateInvoice() {
+    //retrieve all unchecked bills, prepare to put into dto
+    List<BillBook> uncheckedBills = billBookRepository.findAllByChecked(false);
+    List result = new ArrayList<>();
+    //no new bills this week
+    if (uncheckedBills.size() == 0) {
+      throw new InvoiceNotFoundException();
+    }
+    else{
+      //create invoiceDTO array, store each bill information in uncheckedBills
+      List<InvoiceDTO> dtoList = new ArrayList<>();
+      Double totalPrice = 0.0;
+      for(int i = 0; i < uncheckedBills.size(); i++ ){
+        BillBook currentBill = uncheckedBills.get(i);
 
-//    JPAQuery<Tuple> jpaQuery=jpaQueryFactory.select(qBillBook.Id,)
-    List<Tuple> tuples=jpaQueryFactory.select(qBillBook.Id,qBillBook.amount,qBillBook.itemId,qBillBook.date,
-            qBillBook.isChecked,qItem.itemName,qItem.price)
-        .innerJoin(qBillBook)
-        .on(qItem.id.eq(qBillBook.itemId))
-        .fetch();
-    return null;
+        InvoiceDTO temp = new InvoiceDTO();
+        temp.setItemId(currentBill.getItem().getId());
+        temp.setItemName(currentBill.getItem().getItemName());
+        temp.setAmount(currentBill.getAmount());
+        temp.setPrice(currentBill.getItem().getPrice());
+
+        dtoList.add(temp);
+
+        totalPrice += currentBill.getAmount() * currentBill.getItem().getPrice();
+
+      }
+      result.add(dtoList);
+      result.add(totalPrice);
+
+      return result;
+    }
+
+
   }
 }
+
+

@@ -1,17 +1,15 @@
-package com.LuckyStar.Bookstore.adapters;
+package com.Luckystar.Bookstore.adapters;
 
-import com.LuckyStar.Bookstore.business.BillBookLogService;
-import com.LuckyStar.Bookstore.business.entities.BillBook;
-import com.LuckyStar.Bookstore.dto.InvoiceDTO;
-import com.LuckyStar.Bookstore.ports.*;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.Luckystar.Bookstore.business.entities.BillBook;
+import com.Luckystar.Bookstore.dto.InvoiceDTO;
+import com.Luckystar.Bookstore.ports.*;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
-import com.LuckyStar.Bookstore.dto.BillBookDTO;
-import com.LuckyStar.Bookstore.business.entities.Item;
+import com.Luckystar.Bookstore.dto.BillBookDTO;
+import com.Luckystar.Bookstore.business.entities.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -22,15 +20,17 @@ public class BookstoreController {
   private final IItemFinderService itemRegistry;
   private final IBillBookLogService logService;
   private final IBillBookFinderService billRegistry;
-  private final IInvoiceGenerateService invoiceGenrator;
+  private final IInvoiceGenerateService invoiceGenerator;
+
+  private List<InvoiceDTO> invoice;
 
   @Autowired
   public BookstoreController(IItemFinderService itemRegistry, IBillBookLogService logService,
-                             IBillBookFinderService billRegistry,IInvoiceGenerateService invoiceGenrator){
+                             IBillBookFinderService billRegistry,IInvoiceGenerateService invoiceGenerator){
     this.itemRegistry = itemRegistry;
     this.logService = logService;
     this.billRegistry = billRegistry;
-    this.invoiceGenrator = invoiceGenrator;
+    this.invoiceGenerator = invoiceGenerator;
 
   }
 
@@ -59,9 +59,19 @@ public class BookstoreController {
   public BillBook log(@RequestBody BillBookDTO billBookDTO){
     return logService.log(billBookDTO);
   }
+//
+//  @GetMapping(ENDPOINT+"/invoice")
+//  public List<InvoiceDTO> generateInvoice() {
+//    return invoiceGenerator.generateInvoice();
+//  }
 
-  @GetMapping(ENDPOINT+"/invoice")
-  public List<InvoiceDTO> findInvoice() {
-    return invoiceGenrator.findInvoice();
+  @Scheduled(cron = "*/5 * * * * *")
+  public void scheduledInvoice(){
+      invoice = invoiceGenerator.generateInvoice();
+      System.out.println(invoice);
   }
+
+
+
+
 }

@@ -1,8 +1,8 @@
-package com.LuckyStar.Bookstore.business;
+package com.Luckystar.Bookstore.business;
 
-import com.LuckyStar.Bookstore.business.entities.Item;
-import com.LuckyStar.Bookstore.ports.IItemFinderService;
-import com.LuckyStar.Bookstore.ports.IItemRepository;
+import com.Luckystar.Bookstore.business.entities.Item;
+import com.Luckystar.Bookstore.ports.IItemFinderService;
+import com.Luckystar.Bookstore.ports.IItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +11,7 @@ import java.util.List;
 @Service
 public class ItemFinderService implements IItemFinderService {
   private final IItemRepository repository;
+
 
   @Autowired
   public ItemFinderService(IItemRepository repository){

@@ -1,9 +1,10 @@
-package com.LuckyStar.Bookstore.business.entities;
+package com.Luckystar.Bookstore.business.entities;
 
 import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.*;
 import javax.persistence.Id;
 
 @Entity
@@ -11,8 +12,11 @@ import javax.persistence.Id;
 @Setter
 public class Item {
 
-  private @Id @NonNull String id;
-  private @NonNull @Column(name = "ITEMNAME") String itemName;
+  @Id @NonNull
+  private  String id;
+
+  @NonNull @Column(name = "ITEMNAME")
+  private  String itemName;
   private @NonNull Double price;
 
 

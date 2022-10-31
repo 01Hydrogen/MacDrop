@@ -1,4 +1,4 @@
-package com.LuckyStar.Bookstore.business.entities;
+package com.Luckystar.Bookstore.business.entities;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -18,14 +18,20 @@ public class BillBook {
   @Id @NonNull
   private String Id ;
 
-  private @NonNull String itemId;
+  @ManyToOne
+  @JoinColumn(name = "item_id")
+  private Item item;
+
   private @NonNull int amount;
   private @NonNull boolean checked; //是否已经结算
   private @NonNull LocalDate date;
 
 
-  public BillBook(String itemId, int amount, boolean checked, LocalDate date) {
-    this.itemId = itemId;
+  public BillBook(Item newItem, int amount, boolean checked, LocalDate date) {
+    this.item = newItem;
+    item.setId(newItem.getId());
+    item.setItemName(newItem.getItemName());
+    item.setPrice(newItem.getPrice());
     this.amount = amount;
     this.checked = checked;
     this.date = date;

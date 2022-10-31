@@ -1,4 +1,4 @@
-package com.LuckyStar.Bookstore.business;
+package com.Luckystar.Bookstore.business;
 
 public class BillNotFoundException extends RuntimeException{
   public BillNotFoundException(){

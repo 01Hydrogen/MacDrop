@@ -1,6 +1,6 @@
-package com.LuckyStar.Bookstore.ports;
+package com.Luckystar.Bookstore.ports;
 
-import com.LuckyStar.Bookstore.business.entities.BillBook;
+import com.Luckystar.Bookstore.business.entities.BillBook;
 
 import java.time.LocalDate;
 
