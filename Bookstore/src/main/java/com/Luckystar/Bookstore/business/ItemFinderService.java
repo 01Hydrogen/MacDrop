@@ -12,6 +12,7 @@ import java.util.List;
 public class ItemFinderService implements IItemFinderService {
   private final IItemRepository repository;
 
+
   @Autowired
   public ItemFinderService(IItemRepository repository){
     this.repository = repository;

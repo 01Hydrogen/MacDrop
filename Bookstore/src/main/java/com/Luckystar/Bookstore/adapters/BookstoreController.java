@@ -2,10 +2,11 @@ package com.Luckystar.Bookstore.adapters;
 
 import com.Luckystar.Bookstore.business.entities.BillBook;
 import com.Luckystar.Bookstore.dto.InvoiceDTO;
-import com.Luckystar.Bookstore.business.entities.Item;
-import com.Luckystar.Bookstore.dto.BillBookDTO;
 import com.Luckystar.Bookstore.ports.*;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
+import com.Luckystar.Bookstore.dto.BillBookDTO;
+import com.Luckystar.Bookstore.business.entities.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
@@ -19,15 +20,17 @@ public class BookstoreController {
   private final IItemFinderService itemRegistry;
   private final IBillBookLogService logService;
   private final IBillBookFinderService billRegistry;
-  private final IInvoiceGenerateService invoiceGenrator;
+  private final IInvoiceGenerateService invoiceGenerator;
+
+  private List<InvoiceDTO> invoice;
 
   @Autowired
   public BookstoreController(IItemFinderService itemRegistry, IBillBookLogService logService,
-                             IBillBookFinderService billRegistry,IInvoiceGenerateService invoiceGenrator){
+                             IBillBookFinderService billRegistry,IInvoiceGenerateService invoiceGenerator){
     this.itemRegistry = itemRegistry;
     this.logService = logService;
     this.billRegistry = billRegistry;
-    this.invoiceGenrator = invoiceGenrator;
+    this.invoiceGenerator = invoiceGenerator;
 
   }
 
@@ -56,9 +59,23 @@ public class BookstoreController {
   public BillBook log(@RequestBody BillBookDTO billBookDTO){
     return logService.log(billBookDTO);
   }
+//
+//  @GetMapping(ENDPOINT+"/invoice")
+//  public List<InvoiceDTO> generateInvoice() {
+//    return invoiceGenerator.generateInvoice();
+//  }
 
-  @GetMapping(ENDPOINT+"/invoice")
-  public List<InvoiceDTO> findInvoice() {
-    return invoiceGenrator.findInvoice();
+  @Scheduled(cron = "*/5 * * * * *")
+  public void scheduledInvoice(){
+      Double invoice = (Double) invoiceGenerator.generateInvoice().get(1);
+      System.out.println(invoice);
   }
+
+  @GetMapping(ENDPOINT+"/{invoice}")
+  public List getInvoice(){
+    return invoiceGenerator.generateInvoice();
+  }
+
+
+
 }
