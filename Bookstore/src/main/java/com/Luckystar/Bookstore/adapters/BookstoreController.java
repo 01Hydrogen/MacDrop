@@ -67,10 +67,14 @@ public class BookstoreController {
 
   @Scheduled(cron = "*/5 * * * * *")
   public void scheduledInvoice(){
-      invoice = invoiceGenerator.generateInvoice();
+      Double invoice = (Double) invoiceGenerator.generateInvoice().get(1);
       System.out.println(invoice);
   }
 
+  @GetMapping(ENDPOINT+"/{invoice}")
+  public List getInvoice(){
+    return invoiceGenerator.generateInvoice();
+  }
 
 
 
