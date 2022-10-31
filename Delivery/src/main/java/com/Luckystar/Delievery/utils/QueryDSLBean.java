@@ -1,4 +1,4 @@
-package com.Luckystar.Delievery.business;
+package com.Luckystar.Delievery.utils;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.context.annotation.Bean;

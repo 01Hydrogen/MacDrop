@@ -1,7 +1,9 @@
 package com.Luckystar.Delievery.adaptor;
 
 import com.Luckystar.Delievery.dto.AddDropLocationDTO;
+import com.Luckystar.Delievery.dto.DropLocationStatusDTO;
 import com.Luckystar.Delievery.dto.ModifyDropLocationDTO;
+import com.Luckystar.Delievery.dto.UseDropLocationDTO;
 import com.Luckystar.Delievery.exception.DropLocationCRUDException;
 import com.Luckystar.Delievery.ports.IDropLocationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/delivery")
@@ -33,7 +37,7 @@ public class DropLocationController {
         }catch (DropLocationCRUDException dropLocationCRUDException){
             throw dropLocationCRUDException;
         }catch (Exception e){
-            return "Unexpected exception";
+            throw e;
         }
     }
 
@@ -52,7 +56,7 @@ public class DropLocationController {
         }catch (DropLocationCRUDException dropLocationCRUDException){
             throw dropLocationCRUDException;
         }catch (Exception e){
-            return "Unexpected exception";
+            throw e;
         }
     }
 
@@ -63,14 +67,74 @@ public class DropLocationController {
      */
     @RequestMapping(value = "/modifyDropLocation",method = RequestMethod.PUT)
     @ResponseBody
-    public String ModifyDropLocation(ModifyDropLocationDTO modifyDropLocationDTO){
+    public String ModifyDropLocation(ModifyDropLocationDTO modifyDropLocationDTO) throws DropLocationCRUDException{
         try {
             dropLocationService.ModifyDropLocation(modifyDropLocationDTO);
             return "Drop location modified";
-        }catch (Exception e){
+        }catch (DropLocationCRUDException e){
+            throw e;
+        } catch (Exception e){
             e.printStackTrace();
-            return "Unexpected exception";
+            throw e;
         }
     }
 
+
+    /**
+     * 查询所有drop location
+     * @return
+     * @throws DropLocationCRUDException
+     */
+    @RequestMapping(value = "/findDropLocation", method = RequestMethod.GET)
+    @ResponseBody
+    public List<AddDropLocationDTO> FindDropLocation() throws DropLocationCRUDException {
+        try {
+            return dropLocationService.FindDropLocation();
+        }catch (Exception e){
+            throw e;
+        }
+    }
+
+    /**
+     * 查询当前各drop location及其使用状况
+     * @return
+     * @throws DropLocationCRUDException
+     */
+    @RequestMapping(value = "/getDropLocation",method = RequestMethod.GET)
+    @ResponseBody
+    public List<DropLocationStatusDTO> GetDropLocationStatus() throws DropLocationCRUDException {
+        try {
+            return dropLocationService.GetDropLocationStatus();
+        }catch (Exception e){
+            throw e;
+        }
+    }
+
+    /**
+     * 选定drop location使用量+1，在order生成时调用
+     * @return
+     */
+    @RequestMapping(value = "/useDropLocation",method = RequestMethod.POST)
+    @ResponseBody
+    public String UseDropLocation(UseDropLocationDTO useDropLocationDTO){
+        try {
+            boolean result=dropLocationService.UseDropLocation(useDropLocationDTO);
+            if(result){
+                return "Successful";
+            }else {
+                return "Failure";
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    @RequestMapping(value = "/testFunction",method = RequestMethod.GET)
+    @ResponseBody
+    public String testFunction(){
+        dropLocationService.function();
+        return null;
+    }
 }
+
