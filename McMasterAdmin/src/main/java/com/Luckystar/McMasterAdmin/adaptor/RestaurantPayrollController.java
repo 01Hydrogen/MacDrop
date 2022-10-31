@@ -16,6 +16,9 @@ public class RestaurantPayrollController {
     @Autowired
     IRestaurantPayrollService restaurantPayrollService;
 
+    @Autowired
+    EmailClientProxy emailClientProxy;
+
     /**
      * 接收Tracking传来的订单
      * @param restaurantPayrollDTO
@@ -52,6 +55,7 @@ public class RestaurantPayrollController {
             PayPriceDTO payPriceDTO= restaurantPayrollService.payPrice(restaurantId);
             System.out.println("传给Payment system"+payPriceDTO.toString());
             EmailServiceDTO emailServiceDTO=restaurantPayrollService.sendEmailToRestaurant(restaurantId);
+            emailClientProxy.process(emailServiceDTO);
             System.out.println("发送邮件"+emailServiceDTO);
             //付款并发送邮件后所有被处理的订单paid改为true
             restaurantPayrollService.setPaid(restaurantId);

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(produces = "application/json")
 public class EmailController {
-  private static final String ENDPOINT = "EmailService";
+  private static final String ENDPOINT = "/EmailService";
   private final EmailProcessingService service;
 
   @Autowired

@@ -3,6 +3,7 @@ package com.Luckystar.McMasterAdmin.adaptor;
 import com.Luckystar.McMasterAdmin.dto.PayPriceDTO;
 import com.Luckystar.McMasterAdmin.ports.IBookstorePayrollService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +22,7 @@ public class BookstorePayrollController {
      * @param price
      */
     @RequestMapping(value = "/savePrice",method = RequestMethod.POST)
-    public void saveBill(Double price){
+    public void savePrice(@RequestBody Double price){
         bookstorePayrollService.savePrice(price);
     }
 

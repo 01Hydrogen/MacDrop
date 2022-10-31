@@ -1,5 +1,6 @@
 package com.Luckystar.Bookstore.business;
 
+import com.Luckystar.Bookstore.adapters.McMasterAdminClientProxy;
 import com.Luckystar.Bookstore.business.entities.BillBook;
 import com.Luckystar.Bookstore.dto.InvoiceDTO;
 import com.Luckystar.Bookstore.ports.IBillBookRepository;
@@ -15,6 +16,7 @@ import java.util.List;
 public class InvoiceGenerateService implements IInvoiceGenerateService {
   @Autowired
   private final IBillBookRepository billBookRepository;
+
 
 
   public InvoiceGenerateService(IBillBookRepository billBookRepository){

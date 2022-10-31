@@ -114,7 +114,7 @@ public class DropLocationController {
      * 选定drop location使用量+1，在order生成时调用
      * @return
      */
-    @RequestMapping(value = "/useDropLocation",method = RequestMethod.POST)
+    @RequestMapping(value = "/useDropLocation",method = RequestMethod.PUT)
     @ResponseBody
     public String UseDropLocation(UseDropLocationDTO useDropLocationDTO){
         try {
@@ -134,7 +134,7 @@ public class DropLocationController {
      * 手动重新创建dropLocationStatusBeans，服务器崩溃时使用
      * @return
      */
-    @RequestMapping(value = "/testFunction",method = RequestMethod.GET)
+    @RequestMapping(value = "/testFunction",method = RequestMethod.POST)
     @ResponseBody
     public String testFunction(){
         dropLocationService.function();

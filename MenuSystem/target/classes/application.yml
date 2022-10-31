@@ -1,7 +1,4 @@
 server:
-<<<<<<< HEAD
-  port: 1919
-=======
   port: 8080
 
 spring:
@@ -71,4 +68,3 @@ eureka:
 #    org.hibernate.type.descriptor.sql.BasicBinder: trace
 #    # ??????
 #    org.hibernate.metamodel.model.convert.internal.NamedEnumValueConverter: trace
->>>>>>> origin/XandraC
