@@ -2,19 +2,18 @@ package com.LuckyStar.Cart.business;
 
 import com.LuckyStar.Cart.adapters.MenuClientProxy;
 import com.LuckyStar.Cart.adapters.PaymentClientProxy;
+import com.LuckyStar.Cart.adapters.TrackerClientProxy;
 import com.LuckyStar.Cart.business.entities.Cart;
 import com.LuckyStar.Cart.dto.*;
 import com.LuckyStar.Cart.ports.CartRepository;
 import com.LuckyStar.Cart.ports.ICartCheckOutService;
-import jdk.internal.net.http.common.Pair;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
-import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -24,11 +23,13 @@ public class CartCheckOutServiceimpl implements ICartCheckOutService {
     private MenuClientProxy menuProxy;
     private PaymentClientProxy paymentProxy;
 
+    private TrackerClientProxy trackerProxy;
     @Autowired
-    public CartCheckOutServiceimpl(CartRepository cartRepository, MenuClientProxy menuProxy,PaymentClientProxy paymentProxy) {
+    public CartCheckOutServiceimpl(CartRepository cartRepository, MenuClientProxy menuProxy, PaymentClientProxy paymentProxy, TrackerClientProxy trackerProxy) {
         this.cartRepository = cartRepository;
         this.menuProxy = menuProxy;
         this.paymentProxy = paymentProxy;
+        this.trackerProxy = trackerProxy;
     }
 
     @Override
@@ -61,7 +62,7 @@ public class CartCheckOutServiceimpl implements ICartCheckOutService {
          */
         HashMap<String, Pair<Double,String>> priceTable = new HashMap<>();
         for(MenuDTO menu: menus){
-            priceTable.put(menu.getId(), new Pair<>(menu.getPrice(), menu.getName()));
+            priceTable.put(menu.getId(), Pair.of(menu.getPrice(), menu.getName()));
         }
 
         /**
@@ -74,8 +75,8 @@ public class CartCheckOutServiceimpl implements ICartCheckOutService {
         List<CartPriceDTO> cartPriceDTO = new ArrayList<>();
         Double totalPrice = 0.0;
         for(Cart cart:carts){
-            Double price = priceTable.getOrDefault(cart.getMenuId(), new Pair<>(0.0,"notFound")).first;
-            String menuName = priceTable.getOrDefault(cart.getMenuId(), new Pair<>(0.0, "notFound")).second;
+            Double price = priceTable.getOrDefault(cart.getMenuId(), Pair.of(0.0,"notFound")).getFirst();
+            String menuName = priceTable.getOrDefault(cart.getMenuId(), Pair.of(0.0, "notFound")).getSecond();
             /**
              * if price is not found from the menu, means food is not register to the menu, we throw exception
              */
@@ -96,7 +97,7 @@ public class CartCheckOutServiceimpl implements ICartCheckOutService {
         /**
          * Create CartCheckOutDTO, and be ready to send to paymentSystem
          */
-        CartCheckOutDTO cartCheckOutInfo = new CartCheckOutDTO(resOrders, totalPrice, userInfoDTO.getUserId());
+        CartCheckOutDTO cartCheckOutInfo = new CartCheckOutDTO(resOrders, totalPrice, userInfoDTO.getUserId(), userInfoDTO.getUserEmail(),null);
 
         /**
         * send paymentInfo and total Price to Payment
@@ -106,16 +107,16 @@ public class CartCheckOutServiceimpl implements ICartCheckOutService {
         log.info(invoiceResponseDTO.getMessage());
 
         /**
-         * get price after tax.
+         * set price after tax. save banking transactionId
          */
         cartCheckOutInfo.setTotalPrice(invoiceResponseDTO.getPriceAfterTax());
-
+        cartCheckOutInfo.setTransactionId(invoiceResponseDTO.getTransactionId());
 
         /**
          * Create Order in tracking system
          */
 
-
+        trackerProxy.createOrder(cartCheckOutInfo);
 
         return cartCheckOutInfo;
     }

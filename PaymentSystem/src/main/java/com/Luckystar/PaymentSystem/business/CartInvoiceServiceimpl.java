@@ -1,15 +1,17 @@
 package com.Luckystar.PaymentSystem.business;
 
-import com.Luckystar.PaymentSystem.dto.CartInvoiceDTO;
+import com.Luckystar.PaymentSystem.dto.InvoiceResponseDTO;
 import com.Luckystar.PaymentSystem.dto.InvoiceDTO;
 import com.Luckystar.PaymentSystem.ports.ICartInvoiceService;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class CartInvoiceServiceimpl implements ICartInvoiceService {
 
     @Override
-    public CartInvoiceDTO createInvoice(InvoiceDTO cart) {
+    public InvoiceResponseDTO createInvoice(InvoiceDTO cart) {
         /**
          * assume 10% of the payment will be rejected
          */
@@ -17,8 +19,10 @@ public class CartInvoiceServiceimpl implements ICartInvoiceService {
             throw new InvoiceRejectedException(cart.getUserId());
         }
 
-
-
-        return new CartInvoiceDTO(cart.getTotalPrice()*1.13, cart.getUserId(), "Success");
+        /**
+         * generate a fake random UUID as the transactionId received from bank
+         */
+        UUID uuid = UUID.randomUUID();
+        return new InvoiceResponseDTO(cart.getTotalPrice()*1.13, cart.getUserId(), "Success", uuid.toString());
     }
 }

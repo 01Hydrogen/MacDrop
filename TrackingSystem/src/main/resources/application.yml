@@ -1,5 +1,5 @@
 server:
-  port: 9092
+  port: 9290
 
 spring:
   jpa:
@@ -10,3 +10,17 @@ spring:
   h2:
     console:
       enabled: true
+  application:
+    name: tracker-service
+    cloud:
+      inetutils:
+        preferredNetworks:
+          - 192.168
+          - 10.0
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    prefer-ip-address: true

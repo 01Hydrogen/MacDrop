@@ -16,4 +16,9 @@ public class InvoiceResponseDTO {
     private String userId;
     @NonNull
     private String message;
+    /**
+     * transaction from bank
+     */
+    @NonNull
+    private String transactionId;
 }

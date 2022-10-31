@@ -1,8 +1,11 @@
 package com.Luckystar.PaymentSystem.adapters;
 
-import com.Luckystar.PaymentSystem.dto.CartInvoiceDTO;
+import com.Luckystar.PaymentSystem.dto.InvoiceResponseDTO;
 import com.Luckystar.PaymentSystem.dto.InvoiceDTO;
+import com.Luckystar.PaymentSystem.dto.PayrollDTO;
 import com.Luckystar.PaymentSystem.ports.ICartInvoiceService;
+import com.Luckystar.PaymentSystem.ports.IPayrollService;
+import com.Luckystar.PaymentSystem.ports.IRefundService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,15 +14,29 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(produces = "application/json")
 public class InvoiceController {
     private final String ENDPOINT = "/invoice";
-    private final ICartInvoiceService cartInvoiceService;
+    private ICartInvoiceService cartInvoiceService;
+    private IRefundService iRefundService;
+    private IPayrollService payrollService;
 
     @Autowired
-    public InvoiceController(ICartInvoiceService cartInvoiceService) {
+    public InvoiceController(ICartInvoiceService cartInvoiceService, IRefundService iRefundService, IPayrollService payrollService) {
         this.cartInvoiceService = cartInvoiceService;
+        this.iRefundService = iRefundService;
+        this.payrollService = payrollService;
     }
 
     @PostMapping (ENDPOINT)
-    public CartInvoiceDTO createInvoice(@RequestBody InvoiceDTO cart){
+    public InvoiceResponseDTO createInvoice(@RequestBody InvoiceDTO cart){
         return cartInvoiceService.createInvoice(cart);
+    }
+
+    @PostMapping(ENDPOINT + "refund/" + "/{transactionId}")
+    public void refund(@PathVariable String transactionId){
+        iRefundService.refundTranscation(transactionId);
+    }
+
+    @PostMapping(ENDPOINT + "/revenue")
+    public void pay(@RequestBody PayrollDTO payrollDTO){
+        payrollService.pay(payrollDTO);
     }
 }

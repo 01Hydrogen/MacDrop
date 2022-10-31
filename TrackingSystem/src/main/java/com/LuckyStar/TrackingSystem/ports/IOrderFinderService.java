@@ -1,12 +1,14 @@
 package com.LuckyStar.TrackingSystem.ports;
 
 import com.LuckyStar.TrackingSystem.business.entities.OrderInfo;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.querydsl.core.types.Order;
 
 import java.util.List;
 
-public interface OrderStatusRepository extends JpaRepository<OrderInfo, String> {
+public interface IOrderFinderService {
+    List<OrderInfo> findAllPendings();
     List<OrderInfo> findAllByStatus(int status);
-    List<OrderInfo> findAllByResIdContains(String res_id);
+    List<OrderInfo> findAllByResId(String res_id);
     List<OrderInfo> findAllByBikerId(String biker_id);
+    List<OrderInfo> findAll();
 }
