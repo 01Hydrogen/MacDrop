@@ -69,4 +69,9 @@ public class RestaurantPayrollEntity {
     @Column(name = "APPROVED")
     private boolean approved;
 
+    /**
+     * MDD是否已结算
+     */
+    @Column(name = "MDD_CHECKED")
+    private boolean MDDChecked;
 }

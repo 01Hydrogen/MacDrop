@@ -1,9 +1,6 @@
 package com.Luckystar.McMasterAdmin.ports;
 
-import com.Luckystar.McMasterAdmin.dto.EmailServiceDTO;
-import com.Luckystar.McMasterAdmin.dto.PayPriceDTO;
-import com.Luckystar.McMasterAdmin.dto.RestaurantPayrollDTO;
-import com.Luckystar.McMasterAdmin.dto.ShowOrderDetailsDTO;
+import com.Luckystar.McMasterAdmin.dto.*;
 import com.Luckystar.McMasterAdmin.exception.NoBillsException;
 
 import java.util.List;
@@ -19,4 +16,6 @@ public interface IRestaurantPayrollService {
     EmailServiceDTO sendEmailToRestaurant(String restaurantId) throws NoBillsException;
     //付款并发送邮件后所有被处理的订单paid改为true
     void setPaid(String restaurantId);
+    //每周一早上8点向学生发放上周的MDD
+    List<CalcMDDDTO> calcMDD();
 }

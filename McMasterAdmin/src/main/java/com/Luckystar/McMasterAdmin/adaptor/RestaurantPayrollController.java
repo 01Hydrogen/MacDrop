@@ -1,12 +1,10 @@
 package com.Luckystar.McMasterAdmin.adaptor;
 
-import com.Luckystar.McMasterAdmin.dto.EmailServiceDTO;
-import com.Luckystar.McMasterAdmin.dto.PayPriceDTO;
-import com.Luckystar.McMasterAdmin.dto.RestaurantPayrollDTO;
-import com.Luckystar.McMasterAdmin.dto.ShowOrderDetailsDTO;
+import com.Luckystar.McMasterAdmin.dto.*;
 import com.Luckystar.McMasterAdmin.ports.IRestaurantPayrollService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -62,6 +60,18 @@ public class RestaurantPayrollController {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
 
+    /**
+     * 每周一早上8点向学生发放上周的MDD
+     */
+    @RequestMapping(value = "/calcMDD",method = RequestMethod.GET)
+    @Scheduled(cron = "0 0 8 ? * 1")
+    public void calcMDD(){
+        List<CalcMDDDTO> calcMDDDTOList= restaurantPayrollService.calcMDD();
+        for (CalcMDDDTO c:calcMDDDTOList
+             ) {
+            System.out.println("请求UserManagement"+c);
+        }
     }
 }

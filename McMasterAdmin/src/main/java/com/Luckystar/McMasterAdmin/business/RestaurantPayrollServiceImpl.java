@@ -51,6 +51,7 @@ public class RestaurantPayrollServiceImpl implements IRestaurantPayrollService {
                 restaurantPayrollEntity.setMenuName(m.getMenu_name());
                 restaurantPayrollEntity.setAmount(m.getAmount());
                 restaurantPayrollEntity.setTotalPrice(m.getPrice()*m.getAmount());
+                restaurantPayrollEntity.setMDDChecked(false);
                 //存入数据库
                 restaurantPayrollRepository.save(restaurantPayrollEntity);
             }
@@ -213,6 +214,58 @@ public class RestaurantPayrollServiceImpl implements IRestaurantPayrollService {
                 .set(qRestaurantPayrollEntity.approved,false)
                 .where(predicate)
                 .execute();
+    }
+
+    /**
+     * 每周一早上8点向学生发放上周的MDD
+     */
+    @Override
+    public List<CalcMDDDTO> calcMDD() {
+        QRestaurantPayrollEntity qRestaurantPayrollEntity=QRestaurantPayrollEntity.restaurantPayrollEntity;
+        List<CalcMDDDTO> calcMDDDTOList=new ArrayList<>();
+        //查询所有学生ID
+        HashSet studentIdSet=new HashSet();
+        List<RestaurantPayrollEntity> restaurantPayrollEntityList=jpaQueryFactory.selectFrom(qRestaurantPayrollEntity)
+                .where(qRestaurantPayrollEntity.MDDChecked.eq(false))
+                .fetch();
+        for (RestaurantPayrollEntity r:restaurantPayrollEntityList
+             ) {
+            studentIdSet.add(r.getStudentId());
+        }
+        //按ID查找学生本周总金额和餐厅数
+        Iterator it=studentIdSet.iterator();
+        while (it.hasNext()){
+            CalcMDDDTO calcMDDDTO=new CalcMDDDTO();
+            HashSet<String> restaurantIds=new HashSet<>();
+            int restaurantAmount=0;
+            double totalPrice=0.0;
+            double MDDRate=0;
+            String studentId=(String) it.next();
+            List<RestaurantPayrollEntity> r1=jpaQueryFactory.selectFrom(qRestaurantPayrollEntity)
+                    .where(qRestaurantPayrollEntity.studentId.eq(studentId))
+                    .fetch();
+            //计算学生选择过的餐厅和总金额
+            for (RestaurantPayrollEntity r:r1
+                 ) {
+                restaurantIds.add(r.getRestaurantId());
+                //计算总消费金额
+                totalPrice+=r.getTotalPrice();
+            }
+            //计算选择过的餐厅
+            restaurantAmount=restaurantIds.size();
+            //按餐厅数量算MDD转化率
+            if(restaurantAmount>0){
+                MDDRate=(restaurantAmount-1)*0.05;
+            }
+            if (MDDRate>=0.15){
+                MDDRate=0.15;
+            }
+            //计算MDD金额
+            calcMDDDTO.setMDD(MDDRate*totalPrice);
+            calcMDDDTO.setStudentId(studentId);
+            calcMDDDTOList.add(calcMDDDTO);
+        }
+        return calcMDDDTOList;
     }
 
 
