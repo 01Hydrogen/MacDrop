@@ -6,8 +6,8 @@ import com.Luckystar.Bookstore.dto.BillBookDTO;
 public interface IBillBookLogService {
   /**
    * 记账
-   * @param accountBookDTO
+   * @param billBookDTO
    * @return
    */
-  BillBook log(BillBookDTO accountBookDTO);
+  BillBook log(BillBookDTO billBookDTO);
 }
