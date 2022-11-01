@@ -10,6 +10,9 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+/**
+ * Received from cart, contains all the info of a order from student, classified by ResOrderDTO, each ResOrderDTO contains all the cart for a restaurant
+ */
 public class CartCheckOutDTO implements Serializable {
     @NonNull
     private List<ResOrdersDTO> restaurantOrders;

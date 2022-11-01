@@ -8,4 +8,6 @@ public interface ISubOrderFinderService {
     List<SubOrderInfo> findAll();
 
     List<SubOrderInfo> findAllSubOrdersByOrderId(String order_id);
+
+    List<SubOrderInfo> findAllSubOrdersByresId(String res_id);
 }

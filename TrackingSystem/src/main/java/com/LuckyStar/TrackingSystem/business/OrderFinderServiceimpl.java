@@ -25,10 +25,6 @@ public class OrderFinderServiceimpl implements IOrderFinderService {
         return orderStatusRepository.findAllByStatus(status);
     }
 
-    @Override
-    public List<OrderInfo> findAllByResId(String res_id) {
-        return orderStatusRepository.findAllByResIdContains(res_id);
-    }
 
     @Override
     public List<OrderInfo> findAllByBikerId(String biker_id) {

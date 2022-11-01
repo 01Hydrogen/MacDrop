@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface OrderStatusRepository extends JpaRepository<OrderInfo, String> {
     List<OrderInfo> findAllByStatus(int status);
-    List<OrderInfo> findAllByResIdContains(String res_id);
     List<OrderInfo> findAllByBikerId(String biker_id);
 }

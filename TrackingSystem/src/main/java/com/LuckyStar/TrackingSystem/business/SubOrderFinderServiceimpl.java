@@ -33,5 +33,9 @@ public class SubOrderFinderServiceimpl implements ISubOrderFinderService {
         return orderInfo.getSubOrderInfo();
     }
 
+    @Override
+    public List<SubOrderInfo> findAllSubOrdersByresId(String res_id){
+        return subOrderStatusRepository.findAllByResId(res_id);
+    }
 
 }

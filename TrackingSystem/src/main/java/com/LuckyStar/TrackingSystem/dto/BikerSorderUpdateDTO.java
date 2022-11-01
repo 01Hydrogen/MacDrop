@@ -7,7 +7,8 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResUpdateDTO {
+
+public class BikerSorderUpdateDTO {
     @NonNull
     private String subOrderId;
     @NonNull

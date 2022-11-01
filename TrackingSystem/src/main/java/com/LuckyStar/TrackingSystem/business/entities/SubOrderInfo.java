@@ -20,19 +20,40 @@ import java.util.Date;
 public class SubOrderInfo {
     @Id
     @NonNull @GeneratedValue(generator = "jpa-uuid")
-    private String subOrder_id;
-
-    @NonNull
-    private Double price;
-    @NonNull
-    private int amount;
+    @Column(name = "subOrder_id")
+    private String subOrderId;
     @NonNull @Column(name="res_id")
     private String resId;
     private Date delivered_Time;
     /**
      * -1 = rejected, 0 = created, 1 = preparing, 2 =  order ready to be picked up, 3 = biker delivering, 4 = order delivered, 5 = order close
      */
+    @NonNull
     private int status;
+    @NonNull @Column(name = "order_details", length = 1000)
+    private String orderDetails;
+
+
+    /**
+     *
+     *
+     *      @NonNull
+     *     private Double price;
+     *     @NonNull
+     *     private int amount;
+     *
+     *       -1 = rejected, 0 = created, 1 = preparing, 2 =  order ready to be picked up, 3 = biker delivering, 4 = order delivered, 5 = order close
+     *
+     *      @NonNull
+     *
+            private int status;
+     *
+     *
+     *
+     *
+     **/
+
+
 
     /**
      * Spring JPA will auto generate column OrderInfo_id as foreign Key in our db table mapped to OrderInfo Table.
@@ -41,11 +62,9 @@ public class SubOrderInfo {
     @JsonIgnore
     private OrderInfo orderInfo;
 
-    public SubOrderInfo(@NonNull Double price, @NonNull int amount, @NonNull String resId, Date delivered_Time, int status) {
-        this.price = price;
-        this.amount = amount;
+    public SubOrderInfo(@NonNull String resId, int status, String orderDetails) {
         this.resId = resId;
-        this.delivered_Time = delivered_Time;
         this.status = status;
+        this.orderDetails = orderDetails;
     }
 }

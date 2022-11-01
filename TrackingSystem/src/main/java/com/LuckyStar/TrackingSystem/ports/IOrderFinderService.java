@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface IOrderFinderService {
     List<OrderInfo> findAllByStatus(int status);
-    List<OrderInfo> findAllByResId(String res_id);
     List<OrderInfo> findAllByBikerId(String biker_id);
     List<OrderInfo> findAll();
 }

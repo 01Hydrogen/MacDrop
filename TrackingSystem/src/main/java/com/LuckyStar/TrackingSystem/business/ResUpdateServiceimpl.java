@@ -2,12 +2,14 @@ package com.LuckyStar.TrackingSystem.business;
 
 import com.LuckyStar.TrackingSystem.adapters.PaymentClientProxy;
 import com.LuckyStar.TrackingSystem.business.entities.OrderInfo;
+import com.LuckyStar.TrackingSystem.business.entities.SubOrderInfo;
 import com.LuckyStar.TrackingSystem.dto.CompletedOrderDTO;
 import com.LuckyStar.TrackingSystem.dto.OrderRejectedDTO;
 import com.LuckyStar.TrackingSystem.dto.ResUpdateDTO;
 import com.LuckyStar.TrackingSystem.dto.ToMacDTO;
 import com.LuckyStar.TrackingSystem.ports.IResUpdateService;
 import com.LuckyStar.TrackingSystem.ports.OrderStatusRepository;
+import com.LuckyStar.TrackingSystem.ports.SubOrderStatusRepository;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,12 +20,14 @@ import java.util.List;
 @Service
 public class ResUpdateServiceimpl implements IResUpdateService {
     private OrderStatusRepository orderStatusRepository;
+    private SubOrderStatusRepository subOrderStatusRepository;
     private PaymentClientProxy paymentClientProxy;
-    private final Integer CLOSESTATUS = 5;
+
 
     @Autowired
-    public ResUpdateServiceimpl(OrderStatusRepository orderStatusRepository, PaymentClientProxy paymentClientProxy) {
+    public ResUpdateServiceimpl(OrderStatusRepository orderStatusRepository, SubOrderStatusRepository subOrderStatusRepository, PaymentClientProxy paymentClientProxy) {
         this.orderStatusRepository = orderStatusRepository;
+        this.subOrderStatusRepository = subOrderStatusRepository;
         this.paymentClientProxy = paymentClientProxy;
     }
 
@@ -58,13 +62,13 @@ public class ResUpdateServiceimpl implements IResUpdateService {
         /**
          * find the order and update its status
          */
-        OrderInfo order = orderStatusRepository.findById(resUpdateDTO.getOrderId()).orElse(null);
+        SubOrderInfo order = subOrderStatusRepository.findById(resUpdateDTO.getSubOrderId()).orElse(null);
         if(order == null){
-            throw new OrderNotFoundException(resUpdateDTO.getOrderId());
+            throw new OrderNotFoundException(resUpdateDTO.getSubOrderId());
         }
 
         order.setStatus(resUpdateDTO.getStatus());
-        orderStatusRepository.save(order);
+        subOrderStatusRepository.save(order);
 
         /**
          * send email notifying the student the update
@@ -74,29 +78,6 @@ public class ResUpdateServiceimpl implements IResUpdateService {
          * if status was changed to close, then we send out this orderInfo to Mcmaster,
          * first, we will process the data to CompletedOrderDTO, then send through eureka.
          */
-
-        if(resUpdateDTO.getStatus() == CLOSESTATUS){
-            String closed_orders = order.getCartItems();
-            String[] closed_order = closed_orders.split("/");
-            List<ToMacDTO> toMacDTOList = new ArrayList<>();
-
-            /**
-             * Deserialize Json String to toMacDTO, and create CompletedOrderDTO
-             */
-            Gson gson = new Gson();
-            for(String each_restaurantOrder: closed_order){
-                toMacDTOList.add(gson.fromJson(each_restaurantOrder, ToMacDTO.class));
-            }
-
-            CompletedOrderDTO completedOrderDTO = new CompletedOrderDTO(resUpdateDTO.getOrderId(), order.getStudentId(), toMacDTOList);
-
-            /**
-             * send CompletedOrderDTO to Mcmaster
-             */
-
-            return "Order Closed";
-
-        }
 
 
         return "Status Update";

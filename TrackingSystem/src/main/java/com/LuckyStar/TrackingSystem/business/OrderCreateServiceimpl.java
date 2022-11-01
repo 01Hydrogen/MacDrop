@@ -40,14 +40,12 @@ public class OrderCreateServiceimpl implements IOrderCreateService {
         String cart_items = "";
         Gson gson = new Gson();
 
-        String res_ids = "";
         /**
          * convert each carts info into a JSON String, and saved into our cart_items field.
          */
         for(ResOrdersDTO restaurant: cartCheckOutDTO.getRestaurantOrders()){
             for(CartPriceDTO carts: restaurant.getCarts()){
                 ToMacDTO toMacDTO = new ToMacDTO(carts.getName(),carts.getPrice(), carts.getAmount(), carts.getResId());
-                res_ids += carts.getResId() + ",";
                 cart_items += gson.toJson(toMacDTO) + "/";
             }
         }
@@ -57,7 +55,7 @@ public class OrderCreateServiceimpl implements IOrderCreateService {
          */
 
         OrderInfo order = new OrderInfo(cartCheckOutDTO.getTransactionId(), cartCheckOutDTO.getUserId(), cartCheckOutDTO.getUserEmail(),
-                null, res_ids, new Date(), null,cartCheckOutDTO.getTotalPrice(), 0, cart_items, "ITB212", 1);
+                null, new Date(), null,cartCheckOutDTO.getTotalPrice(), 0, cart_items, "ITB212", 1);
         if(exists(order)) {
             throw new IllegalArgumentException("Order Already exists");
         }
@@ -68,12 +66,16 @@ public class OrderCreateServiceimpl implements IOrderCreateService {
          */
         OrderInfo orderInfo = new OrderInfo();
         for(ResOrdersDTO restaurant: cartCheckOutDTO.getRestaurantOrders()){
-            for(CartPriceDTO carts: restaurant.getCarts()){
-                ToMacDTO toMacDTO = new ToMacDTO(carts.getName(),carts.getPrice(), carts.getAmount(), carts.getResId());
-                SubOrderInfo subOrderInfo = new SubOrderInfo(carts.getPrice(), carts.getAmount(), carts.getResId(), null, 0);
-                subOrderInfo.setOrderInfo(saved);
-                subOrderStatusRepository.save(subOrderInfo);
+            String orderDetails = "";
+            String resId = "";
+            for(CartPriceDTO carts: restaurant.getCarts()) {
+                ToMacDTO toMacDTO = new ToMacDTO(carts.getName(), carts.getPrice(), carts.getAmount(), carts.getResId());
+                orderDetails += gson.toJson(carts) + "/";
+                resId = carts.getResId();
             }
+            SubOrderInfo subOrderInfo = new SubOrderInfo(resId, 0, orderDetails);
+            subOrderInfo.setOrderInfo(saved);
+            subOrderStatusRepository.save(subOrderInfo);
         }
 
 

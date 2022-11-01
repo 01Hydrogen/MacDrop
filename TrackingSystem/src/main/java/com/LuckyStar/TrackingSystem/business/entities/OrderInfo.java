@@ -33,11 +33,6 @@ public class OrderInfo {
   private String studentEmail;
   @Column(name = "biker_id")
   private String bikerId;
-
-  @NonNull
-  @Column(name = "res_id")
-  private String resId;
-
   @Column(name = "created_time")
   private @NonNull Date createdTime;
   @Column(name = "delivered_time")
@@ -60,12 +55,11 @@ public class OrderInfo {
   @NonNull
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "orderInfo")
   private List<SubOrderInfo> subOrderInfo;
-  public OrderInfo(@NonNull String transactionId, @NonNull String studentId, @NonNull String studentEmail,String bikerId, @NonNull String resId ,@NonNull Date createdTime, Date deliveredTime, @NonNull Double totalPrice, @NonNull int status, @NonNull String cartItems, @NonNull String deliveredLocation, @NonNull int deliveredTimeSlot) {
+  public OrderInfo(@NonNull String transactionId, @NonNull String studentId, @NonNull String studentEmail,String bikerId ,@NonNull Date createdTime, Date deliveredTime, @NonNull Double totalPrice, @NonNull int status, @NonNull String cartItems, @NonNull String deliveredLocation, @NonNull int deliveredTimeSlot) {
     this.transactionId = transactionId;
     this.studentId = studentId;
     this.studentEmail = studentEmail;
     this.bikerId = bikerId;
-    this.resId = resId;
     this.createdTime = createdTime;
     this.deliveredTime = deliveredTime;
     this.totalPrice = totalPrice;

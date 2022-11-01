@@ -39,7 +39,7 @@ public class TrackingController {
     }
 
     /**
-     * Biker will call this API and find all pending orders
+     * Biker can find all pending orders by calling this API
      * @param status
      * @return
      */
@@ -47,36 +47,47 @@ public class TrackingController {
     public List<OrderInfo> findAllByStatus(@PathVariable Integer status){
         return iOrderFinderService.findAllByStatus(status);
     }
-    @GetMapping(ENDPOINT+ "/res" + "/{res_id}")
-    public List<OrderInfo> findAllByResId(@PathVariable String res_id){
-        return iOrderFinderService.findAllByResId(res_id);
-    }
 
+    /**
+     * Biker can find all the orders that he selected by calling this API
+     * @param biker_id
+     * @return
+     */
     @GetMapping(ENDPOINT + "/biker" +"/{biker_id}")
     public List<OrderInfo> findAllBiker(@PathVariable String biker_id){
         return iOrderFinderService.findAllByBikerId(biker_id);
     }
 
+    /**
+     * cart checkOut process,  create an Order
+     * @param cartCheckOutDTO
+     * @return
+     */
     @PostMapping(ENDPOINT + "/created")
     public String createOrder(@RequestBody CartCheckOutDTO cartCheckOutDTO){
         iOrderCreateService.orderCreate(cartCheckOutDTO);
         return "Order Created";
     }
 
+    /**
+     * when biker finished all the subOrders of his Order, he will update the Order(not subOrder) status here
+     * @param bikerUpdateDTO
+     * @return
+     */
     @PutMapping(ENDPOINT + "/bikerUpdate")
     public String bikerUpdateStatus(@RequestBody BikerUpdateDTO bikerUpdateDTO){
         iBikerUpdateService.statusUpdate(bikerUpdateDTO);
         return "Status Update";
     }
 
+    /**
+     * restaurant rejceted a SubOrder,
+     * for now, if one restaurant reject the SubOrder, the Big Order will get rejected entirely
+     * @param orderRejectedDTO
+     * @return
+     */
     @PutMapping(ENDPOINT + "/orderReject")
     public String orderRejected(@RequestBody OrderRejectedDTO orderRejectedDTO){
         return iResUpdateService.orderRejected(orderRejectedDTO);
     }
-
-    @PutMapping(ENDPOINT + "/resUpdate")
-    public String resUpdateStatus(@RequestBody ResUpdateDTO resUpdateDTO){
-        return iResUpdateService.statusUpdate(resUpdateDTO);
-    }
-
 }
