@@ -17,13 +17,28 @@ public class UserMDDConsumeController {
 
 
     /**
-     * 消费MMD
+     * 消费MDD
      * @param userDTO
      * @return
      */
-    @RequestMapping(value = "/consume",method = RequestMethod.POST)
-    public String MMDConsume(@RequestBody UserDTO userDTO){
-        boolean result=userMDDConsumeService.MDDConsume(userDTO);
+    @RequestMapping(value = "/MDDConsume",method = RequestMethod.PUT)
+    public String MDDConsume(@RequestBody UserDTO userDTO){
+        boolean result= userMDDConsumeService.MDDConsume(userDTO);
+        if(result){
+            return "Successful";
+        }else {
+            return "Failure";
+        }
+    }
+
+    /**
+     * 增加MDD
+     * @param userDTO
+     * @return
+     */
+    @RequestMapping(value = "/MDDAdd",method = RequestMethod.PUT)
+    public String MDDAdd(@RequestBody UserDTO userDTO){
+        boolean result= userMDDConsumeService.MDDAdd(userDTO);
         if(result){
             return "Successful";
         }else {

@@ -18,5 +18,5 @@ public class UserDTO {
 
     private String emailAddress;
 
-    private double MMD;
+    private double MDD;
 }

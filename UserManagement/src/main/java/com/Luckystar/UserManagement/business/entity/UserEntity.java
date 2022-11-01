@@ -1,7 +1,6 @@
 package com.Luckystar.UserManagement.business.entity;
 
 import com.Luckystar.UserManagement.dto.UserDTO;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -39,13 +38,13 @@ public class UserEntity {
         if (null!=userDTO.getEmailAddress()){
             this.emailAddress=userDTO.getEmailAddress();
         }
-        if(userDTO.getMMD()!=0){
-            this.MMD=userDTO.getMMD();
+        if(userDTO.getMDD()!=0){
+            this.MMD=userDTO.getMDD();
         }
     }
 
     /**
-     * 用户ID
+     * 自动生成ID
      */
     @Id
     @Column(name = "ID",length = 32)
@@ -85,6 +84,6 @@ public class UserEntity {
     /**
      * McMasterDollar
      */
-    @Column(name = "MMD")
+    @Column(name = "MDD")
     private double MMD;
 }
