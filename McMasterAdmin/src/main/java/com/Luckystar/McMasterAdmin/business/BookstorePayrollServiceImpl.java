@@ -10,6 +10,7 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,6 +44,7 @@ public class BookstorePayrollServiceImpl implements IBookstorePayrollService {
      * @return
      */
     @Override
+    @Transactional
     public List<PayPriceDTO> approve() {
         List<PayPriceDTO> payPriceDTOList=new ArrayList<>();
         QBookstorePayrollEntity qBookstorePayrollEntity=QBookstorePayrollEntity.bookstorePayrollEntity;

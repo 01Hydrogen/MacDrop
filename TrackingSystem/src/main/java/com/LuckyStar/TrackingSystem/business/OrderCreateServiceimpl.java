@@ -57,7 +57,7 @@ public class OrderCreateServiceimpl implements IOrderCreateService {
          */
 
         OrderInfo order = new OrderInfo(cartCheckOutDTO.getUserId(), cartCheckOutDTO.getUserEmail(),
-                null, new Date(), null,cartCheckOutDTO.getTotalPrice(), 0, cart_items, "ITB212", 1);
+                null, new Date(), null,cartCheckOutDTO.getTotalPrice(), 0, cart_items, cartCheckOutDTO.getDeliverLocation(), cartCheckOutDTO.getDeliverTimeSlot());
         if(exists(order)) {
             throw new IllegalArgumentException("Order Already exists");
         }

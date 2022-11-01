@@ -19,8 +19,7 @@ public class BikerUpdateServiceimpl implements IBikerUpdateService {
     private final SubOrderStatusRepository subOrderStatusRepository;
     private final McmasterClientProxy mcmasterClientProxy;
     private final EmailClientProxy emailClientProxy;
-    private final Integer DELIVERINGSTATUS = 3;
-    private final Integer DELIVEREDSTATUS = 4;
+    private final Integer DELIVEREDSTATUS = 3;
     private final Integer CLOSESTATUS = 2;
     private final static String MCMASTEREMAIL = "cas@mcmaster.ca";
     private final static String STATUSMESSAGE = "your order status has been changed to: ";
@@ -50,7 +49,7 @@ public class BikerUpdateServiceimpl implements IBikerUpdateService {
          * when biker picked up the order, or delivered the order we change the status.
          */
         if(order.getBikerId() == null) order.setBikerId(bikerUpdateDTO.getBikerId());
-        if(bikerUpdateDTO.getStatus() == DELIVERINGSTATUS || bikerUpdateDTO.getStatus() == DELIVEREDSTATUS) order.setStatus(bikerUpdateDTO.getStatus());
+        if(bikerUpdateDTO.getStatus() == DELIVEREDSTATUS) order.setStatus(bikerUpdateDTO.getStatus());
 
         /**
          * if biker delivered the order, we can auto set delivered time by Date
@@ -100,10 +99,13 @@ public class BikerUpdateServiceimpl implements IBikerUpdateService {
         }
         subOrderInfo.setStatus(bikerSorderUpdateDTO.getStatus());
 
+        subOrderInfo.setDelivered_Time(new Date());
+
         subOrderStatusRepository.save(subOrderInfo);
         /**
          * send out Email to student to Notify biker change the status
          */
+
 
         emailClientProxy.process(new EmailRequestDTO(MCMASTEREMAIL, subOrderInfo.getOrderInfo().getStudentEmail(), STATUSMESSAGE + STATUS.get(bikerSorderUpdateDTO.getStatus()), ""));
 

@@ -35,7 +35,7 @@ public class OrderInfo {
   private Date deliveredTime;
   private @NonNull Double totalPrice;
   /**
-   * 0 = created, 1 = pending, 2 order delivered, 3 = order close
+   * 0 = created, 1 = pending, 2 order delivered,
    */
   private @NonNull int status;
   @NonNull @Column(name = "carts_item", length = 2000)

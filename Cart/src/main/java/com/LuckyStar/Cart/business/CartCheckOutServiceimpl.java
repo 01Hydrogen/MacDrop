@@ -24,6 +24,7 @@ public class CartCheckOutServiceimpl implements ICartCheckOutService {
     private PaymentClientProxy paymentProxy;
 
     private TrackerClientProxy trackerProxy;
+
     @Autowired
     public CartCheckOutServiceimpl(CartRepository cartRepository, MenuClientProxy menuProxy, PaymentClientProxy paymentProxy, TrackerClientProxy trackerProxy) {
         this.cartRepository = cartRepository;
@@ -34,6 +35,7 @@ public class CartCheckOutServiceimpl implements ICartCheckOutService {
 
     @Override
     public CartCheckOutDTO cartCheckOut(UserInfoDTO userInfoDTO) {
+
         /**
          * start checkout process by first getting all the items info of this order
          * by searching user_id, we get all the items(cart) related to one user
@@ -99,7 +101,7 @@ public class CartCheckOutServiceimpl implements ICartCheckOutService {
         /**
          * Create CartCheckOutDTO, and be ready to send to paymentSystem
          */
-        CartCheckOutDTO cartCheckOutInfo = new CartCheckOutDTO(resOrders, totalPrice, userInfoDTO.getUserId(), userInfoDTO.getUserEmail());
+        CartCheckOutDTO cartCheckOutInfo = new CartCheckOutDTO(resOrders, totalPrice, userInfoDTO.getUserId(), userInfoDTO.getUserEmail(), userInfoDTO.getDeliverLocation(), userInfoDTO.getDeliverTimeSlot());
 
         /**
         * send paymentInfo and total Price to Payment
@@ -131,6 +133,8 @@ public class CartCheckOutServiceimpl implements ICartCheckOutService {
          */
 
         trackerProxy.createOrder(cartCheckOutInfo);
+
+        cartRepository.deleteAllByUserId(userInfoDTO.getUserId());
 
         return cartCheckOutInfo;
     }

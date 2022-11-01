@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -32,8 +34,10 @@ public class UserLoginController {
     @ResponseBody
     public String Login(UserDTO userDTO, HttpServletRequest request) throws UserNotFoundException,Exception{
         try {
+//            HttpServletRequest httpServletRequest=((ServletRequestAttributes)(RequestContextHolder.currentRequestAttributes()) ).getRequest();
             userDTO=userLoginService.Login(userDTO);
             HttpSession session=request.getSession();
+//            HttpSession session=httpServletRequest.getSession();
             //将用户信息放入session
             session.setAttribute("currentUser",userDTO);
             //按照用户类型重定向
@@ -47,12 +51,14 @@ public class UserLoginController {
 
     /**
      * 其它service获取当前用户ID和用户名
-     * @param httpServletRequest
+     * @param
      * @return
      */
-    @RequestMapping(value = "/getCurrentUser",method = RequestMethod.GET)
+    @RequestMapping(value = "/getCurrentUser",method = RequestMethod.POST)
     @ResponseBody
-    public CurrentUserDTO getCurrentUser (HttpServletRequest httpServletRequest){
+//    public CurrentUserDTO getCurrentUser (HttpServletRequest httpServletRequest){
+    public CurrentUserDTO getCurrentUser (){
+        HttpServletRequest httpServletRequest=((ServletRequestAttributes)(RequestContextHolder.currentRequestAttributes()) ).getRequest();
         HttpSession session=httpServletRequest.getSession();
         UserDTO userDTO=(UserDTO) session.getAttribute("currentUser");
         return new CurrentUserDTO(userDTO.getId(),userDTO.getUsername());

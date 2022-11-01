@@ -20,7 +20,21 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:h2:mem:userdb
+    url: jdbc:h2:mem:deliverdb
   h2:
     console:
       enabled: true
+  application:
+    name: deliver-service
+  cloud:
+    inetutils:
+      preferredNetworks:
+        - 192.168
+        - 10.0
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    prefer-ip-address: true

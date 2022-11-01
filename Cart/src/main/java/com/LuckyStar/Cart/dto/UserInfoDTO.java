@@ -12,4 +12,9 @@ public class UserInfoDTO {
     @NonNull private String cardNumber;
     @NonNull private String cardHolderName;
     @NonNull private String cvv;
+
+    @NonNull
+    private String deliverLocation;
+    @NonNull
+    private int deliverTimeSlot;
 }

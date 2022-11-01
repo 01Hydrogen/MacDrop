@@ -22,4 +22,8 @@ public class CartCheckOutDTO implements Serializable {
     private String userId;
     @NonNull
     private String userEmail;
+    @NonNull
+    private String deliverLocation;
+    @NonNull
+    private int deliverTimeSlot;
 }

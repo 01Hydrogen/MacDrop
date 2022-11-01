@@ -29,7 +29,7 @@ public class MenuController {
      * get all food info from all restaurant menu
      * @return
      */
-    @GetMapping(ENDPOINT)
+    @GetMapping(ENDPOINT+"/findAllRegisteredFood")
     public List<Menu> findAll(){
         return registry.findAll();
     }

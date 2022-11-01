@@ -46,12 +46,14 @@ public class InvoiceGenerateService implements IInvoiceGenerateService {
         temp.setPrice(currentBill.getItem().getPrice());
 
         dtoList.add(temp);
-
+        currentBill.setChecked(true);
         totalPrice += currentBill.getAmount() * currentBill.getItem().getPrice();
 
       }
       result.add(dtoList);
       result.add(totalPrice);
+
+      billBookRepository.saveAll(uncheckedBills);
 
       return result;
     }
