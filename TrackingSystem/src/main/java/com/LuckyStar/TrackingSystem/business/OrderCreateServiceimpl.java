@@ -54,7 +54,7 @@ public class OrderCreateServiceimpl implements IOrderCreateService {
          * first create a single big Order
          */
 
-        OrderInfo order = new OrderInfo(cartCheckOutDTO.getTransactionId(), cartCheckOutDTO.getUserId(), cartCheckOutDTO.getUserEmail(),
+        OrderInfo order = new OrderInfo(cartCheckOutDTO.getUserId(), cartCheckOutDTO.getUserEmail(),
                 null, new Date(), null,cartCheckOutDTO.getTotalPrice(), 0, cart_items, "ITB212", 1);
         if(exists(order)) {
             throw new IllegalArgumentException("Order Already exists");
@@ -73,7 +73,7 @@ public class OrderCreateServiceimpl implements IOrderCreateService {
                 orderDetails += gson.toJson(carts) + "/";
                 resId = carts.getResId();
             }
-            SubOrderInfo subOrderInfo = new SubOrderInfo(resId, 0, orderDetails);
+            SubOrderInfo subOrderInfo = new SubOrderInfo(restaurant.getTransactionId(),resId, 0, restaurant.getTotalPrice() ,orderDetails);
             subOrderInfo.setOrderInfo(saved);
             subOrderStatusRepository.save(subOrderInfo);
         }

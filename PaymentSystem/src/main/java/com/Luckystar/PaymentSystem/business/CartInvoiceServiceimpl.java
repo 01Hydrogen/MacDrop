@@ -20,9 +20,14 @@ public class CartInvoiceServiceimpl implements ICartInvoiceService {
         }
 
         /**
-         * generate a fake random UUID as the transactionId received from bank
+         * generate fake random UUIDs as the transactionId received from bank
+         * we first count how many uuid we need to generate by counting how many res_id in the Res_id field.
          */
-        UUID uuid = UUID.randomUUID();
-        return new InvoiceResponseDTO(cart.getTotalPrice()*1.13, cart.getUserId(), "Success", uuid.toString());
+        int length = cart.getRes_id().split("/").length;
+        String transactionIds = "";
+        for(int i = 0; i < length; ++i){
+            transactionIds += UUID.randomUUID().toString() + "/";
+        }
+        return new InvoiceResponseDTO(cart.getTotalPrice()*1.13, cart.getUserId(), "Success", transactionIds);
     }
 }

@@ -83,6 +83,8 @@ public class CartCheckOutServiceimpl implements ICartCheckOutService {
             if(price == 0.0) { throw new PriceNotFoundException(cart.getId(), cart.getMenuId());}
             totalPrice += price;
             restaurants.get(cart.getResId()).getCarts().add(new CartPriceDTO(cart.getId(), price, cart.getMenuId(), cart.getResId(), cart.getAmount(), menuName));
+            Double currentPrice = restaurants.get(cart.getResId()).getTotalPrice();
+            restaurants.get(cart.getResId()).setTotalPrice(currentPrice + price);
         }
 
         /**
@@ -97,20 +99,32 @@ public class CartCheckOutServiceimpl implements ICartCheckOutService {
         /**
          * Create CartCheckOutDTO, and be ready to send to paymentSystem
          */
-        CartCheckOutDTO cartCheckOutInfo = new CartCheckOutDTO(resOrders, totalPrice, userInfoDTO.getUserId(), userInfoDTO.getUserEmail(),null);
+        CartCheckOutDTO cartCheckOutInfo = new CartCheckOutDTO(resOrders, totalPrice, userInfoDTO.getUserId(), userInfoDTO.getUserEmail());
 
         /**
         * send paymentInfo and total Price to Payment
         */
-        InvoiceDTO invoiceDTO = new InvoiceDTO(cartCheckOutInfo.getTotalPrice(),cartCheckOutInfo.getUserId(), userInfoDTO);
+        String resIds = "";
+        for(String res: restaurants.keySet()){
+            resIds += res + "/";
+        }
+        InvoiceDTO invoiceDTO = new InvoiceDTO(cartCheckOutInfo.getTotalPrice(),cartCheckOutInfo.getUserId(),resIds,userInfoDTO);
         InvoiceResponseDTO invoiceResponseDTO = paymentProxy.createInvoice(invoiceDTO);
         log.info(invoiceResponseDTO.getMessage());
 
         /**
-         * set price after tax. save banking transactionId
+         * first we split the transactionId by '/'
+         * set price after tax. save banking transactionId to each restaurant
+         */
+        String[] transactionId = invoiceResponseDTO.getTransactionId().split("/");
+
+        /**
+         * saved the transactionId by first going into cartcheckOutDTO and then do a for loop through all ResOrdersDTO, assign corresponding transactionId
          */
         cartCheckOutInfo.setTotalPrice(invoiceResponseDTO.getPriceAfterTax());
-        cartCheckOutInfo.setTransactionId(invoiceResponseDTO.getTransactionId());
+        for(int i = 0;i < cartCheckOutInfo.getRestaurantOrders().size(); ++i){
+            cartCheckOutInfo.getRestaurantOrders().get(i).setTransactionId(transactionId[i]);
+        }
 
         /**
          * Create Order in tracking system

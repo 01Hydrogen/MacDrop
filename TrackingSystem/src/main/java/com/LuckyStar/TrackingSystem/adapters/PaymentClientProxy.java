@@ -1,5 +1,6 @@
 package com.LuckyStar.TrackingSystem.adapters;
 
+import com.LuckyStar.TrackingSystem.dto.RefundDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface PaymentClientProxy {
     String ENDPOINT = "/invoice";
 
-    @PostMapping(ENDPOINT + "refund/" + "/{transactionId}")
-    public void refund(@PathVariable String transactionId);
+    @PostMapping(ENDPOINT + "refund/")
+    public Double refund(@RequestBody RefundDTO refundDTO);
 }
 
 

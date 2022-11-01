@@ -17,7 +17,7 @@ public class InvoiceResponseDTO {
     @NonNull
     private String message;
     /**
-     * transaction from bank
+     * transactionId from bank, in concatenating form
      */
     @NonNull
     private String transactionId;

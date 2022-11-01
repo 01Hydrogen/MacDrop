@@ -3,6 +3,7 @@ package com.Luckystar.PaymentSystem.adapters;
 import com.Luckystar.PaymentSystem.dto.InvoiceResponseDTO;
 import com.Luckystar.PaymentSystem.dto.InvoiceDTO;
 import com.Luckystar.PaymentSystem.dto.PayrollDTO;
+import com.Luckystar.PaymentSystem.dto.RefundDTO;
 import com.Luckystar.PaymentSystem.ports.ICartInvoiceService;
 import com.Luckystar.PaymentSystem.ports.IPayrollService;
 import com.Luckystar.PaymentSystem.ports.IRefundService;
@@ -30,9 +31,9 @@ public class InvoiceController {
         return cartInvoiceService.createInvoice(cart);
     }
 
-    @PostMapping(ENDPOINT + "refund/" + "/{transactionId}")
-    public void refund(@PathVariable String transactionId){
-        iRefundService.refundTranscation(transactionId);
+    @PostMapping(ENDPOINT + "refund/")
+    public Double refund(@RequestBody RefundDTO refundDTO){
+        return iRefundService.refundTranscation(refundDTO);
     }
 
     @PostMapping(ENDPOINT + "/revenue")

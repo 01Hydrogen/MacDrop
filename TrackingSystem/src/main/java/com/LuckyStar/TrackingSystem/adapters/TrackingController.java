@@ -79,15 +79,4 @@ public class TrackingController {
         iBikerUpdateService.statusUpdate(bikerUpdateDTO);
         return "Status Update";
     }
-
-    /**
-     * restaurant rejceted a SubOrder,
-     * for now, if one restaurant reject the SubOrder, the Big Order will get rejected entirely
-     * @param orderRejectedDTO
-     * @return
-     */
-    @PutMapping(ENDPOINT + "/orderReject")
-    public String orderRejected(@RequestBody OrderRejectedDTO orderRejectedDTO){
-        return iResUpdateService.orderRejected(orderRejectedDTO);
-    }
 }

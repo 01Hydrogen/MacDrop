@@ -2,6 +2,7 @@ package com.LuckyStar.TrackingSystem.adapters;
 
 import com.LuckyStar.TrackingSystem.business.entities.SubOrderInfo;
 import com.LuckyStar.TrackingSystem.dto.BikerSorderUpdateDTO;
+import com.LuckyStar.TrackingSystem.dto.OrderRejectedDTO;
 import com.LuckyStar.TrackingSystem.dto.ResUpdateDTO;
 import com.LuckyStar.TrackingSystem.ports.IBikerUpdateService;
 import com.LuckyStar.TrackingSystem.ports.IResUpdateService;
@@ -71,5 +72,15 @@ public class SubOrderController {
         return iResUpdateService.statusUpdate(resUpdateDTO);
     }
 
+    /**
+     * restaurant rejceted a SubOrder,
+     * for now, if one restaurant reject the SubOrder, the Big Order will get rejected entirely
+     * @param orderRejectedDTO
+     * @return
+     */
+    @PutMapping(ENDPOINT + "/res/reject")
+    public String orderRejected(@RequestBody OrderRejectedDTO orderRejectedDTO){
+        return iResUpdateService.orderRejected(orderRejectedDTO);
+    }
 
 }

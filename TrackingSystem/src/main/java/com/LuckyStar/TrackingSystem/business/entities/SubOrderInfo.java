@@ -22,6 +22,10 @@ public class SubOrderInfo {
     @NonNull @GeneratedValue(generator = "jpa-uuid")
     @Column(name = "subOrder_id")
     private String subOrderId;
+
+    @NonNull @Column(name = "transaction_id")
+    private String transactionId;
+
     @NonNull @Column(name="res_id")
     private String resId;
     private Date delivered_Time;
@@ -30,6 +34,10 @@ public class SubOrderInfo {
      */
     @NonNull
     private int status;
+
+    @NonNull
+    @Column(name="total_price")
+    private Double totalPrice;
     @NonNull @Column(name = "order_details", length = 1000)
     private String orderDetails;
 
@@ -62,9 +70,11 @@ public class SubOrderInfo {
     @JsonIgnore
     private OrderInfo orderInfo;
 
-    public SubOrderInfo(@NonNull String resId, int status, String orderDetails) {
+    public SubOrderInfo(@NonNull String transactionId, @NonNull String resId, int status, Double totalPrice, String orderDetails) {
+        this.transactionId = transactionId;
         this.resId = resId;
         this.status = status;
         this.orderDetails = orderDetails;
+        this.totalPrice = totalPrice;
     }
 }

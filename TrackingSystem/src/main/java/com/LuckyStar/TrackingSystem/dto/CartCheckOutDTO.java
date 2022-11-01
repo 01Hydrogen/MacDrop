@@ -22,5 +22,4 @@ public class CartCheckOutDTO implements Serializable {
     private String userId;
     @NonNull
     private String userEmail;
-    private String transactionId;
 }

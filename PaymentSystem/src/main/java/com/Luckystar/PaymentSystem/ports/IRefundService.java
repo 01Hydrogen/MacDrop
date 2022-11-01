@@ -1,5 +1,7 @@
 package com.Luckystar.PaymentSystem.ports;
 
+import com.Luckystar.PaymentSystem.dto.RefundDTO;
+
 public interface IRefundService {
-    void refundTranscation(String transactionId);
+    Double refundTranscation(RefundDTO refundDTO);
 }

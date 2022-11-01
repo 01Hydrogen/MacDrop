@@ -23,10 +23,6 @@ import java.util.List;
 public class OrderInfo {
   @Id @NonNull @GeneratedValue(generator = "jpa-uuid")
   private String id;
-
-  @NonNull @Column(name = "transaction_id")
-  private String transactionId;
-
   private @NonNull @Column(name = "student_id") String studentId;
 
   @NonNull @Column(name = "student_email")
@@ -55,8 +51,7 @@ public class OrderInfo {
   @NonNull
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "orderInfo")
   private List<SubOrderInfo> subOrderInfo;
-  public OrderInfo(@NonNull String transactionId, @NonNull String studentId, @NonNull String studentEmail,String bikerId ,@NonNull Date createdTime, Date deliveredTime, @NonNull Double totalPrice, @NonNull int status, @NonNull String cartItems, @NonNull String deliveredLocation, @NonNull int deliveredTimeSlot) {
-    this.transactionId = transactionId;
+  public OrderInfo(@NonNull String studentId, @NonNull String studentEmail,String bikerId ,@NonNull Date createdTime, Date deliveredTime, @NonNull Double totalPrice, @NonNull int status, @NonNull String cartItems, @NonNull String deliveredLocation, @NonNull int deliveredTimeSlot) {
     this.studentId = studentId;
     this.studentEmail = studentEmail;
     this.bikerId = bikerId;

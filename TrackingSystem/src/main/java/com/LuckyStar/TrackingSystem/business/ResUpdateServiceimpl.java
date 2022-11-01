@@ -3,10 +3,7 @@ package com.LuckyStar.TrackingSystem.business;
 import com.LuckyStar.TrackingSystem.adapters.PaymentClientProxy;
 import com.LuckyStar.TrackingSystem.business.entities.OrderInfo;
 import com.LuckyStar.TrackingSystem.business.entities.SubOrderInfo;
-import com.LuckyStar.TrackingSystem.dto.CompletedOrderDTO;
-import com.LuckyStar.TrackingSystem.dto.OrderRejectedDTO;
-import com.LuckyStar.TrackingSystem.dto.ResUpdateDTO;
-import com.LuckyStar.TrackingSystem.dto.ToMacDTO;
+import com.LuckyStar.TrackingSystem.dto.*;
 import com.LuckyStar.TrackingSystem.ports.IResUpdateService;
 import com.LuckyStar.TrackingSystem.ports.OrderStatusRepository;
 import com.LuckyStar.TrackingSystem.ports.SubOrderStatusRepository;
@@ -35,13 +32,13 @@ public class ResUpdateServiceimpl implements IResUpdateService {
         /**
          * find the order by orderId, and update status to reject
          */
-        OrderInfo order = orderStatusRepository.findById(orderRejectedDTO.getOrderId()).orElse(null);
-        if(order == null){
-            throw new OrderNotFoundException(orderRejectedDTO.getOrderId());
+        SubOrderInfo subOrder = subOrderStatusRepository.findById(orderRejectedDTO.getSubOrderId()).orElse(null);
+        if(subOrder == null){
+            throw new OrderNotFoundException(orderRejectedDTO.getSubOrderId());
         }
 
-        order.setStatus(orderRejectedDTO.getStatus());
-        orderStatusRepository.save(order);
+        subOrder.setStatus(orderRejectedDTO.getStatus());
+        subOrderStatusRepository.save(subOrder);
 
         /**
          * send email notifying the student that his/her order has been rejected by the restaurant
@@ -52,9 +49,15 @@ public class ResUpdateServiceimpl implements IResUpdateService {
          * send invoice(transactionId) to Payment, start refund process
          */
 
-        paymentClientProxy.refund(order.getTransactionId());
+        RefundDTO refundDTO = new RefundDTO(subOrder.getTransactionId(), subOrder.getTotalPrice());
+        Double refundAmount = paymentClientProxy.refund(refundDTO);
 
-        return "Order Rejected";
+        OrderInfo order = subOrder.getOrderInfo();
+        order.setTotalPrice(order.getTotalPrice() - refundAmount);
+        orderStatusRepository.save(order);
+        //OrderInfo orderInfo = orderStatusRepository.findById(order.getId()).orElse(null);
+
+        return "Order Rejected and Total Price has been updated";
     }
 
     @Override
