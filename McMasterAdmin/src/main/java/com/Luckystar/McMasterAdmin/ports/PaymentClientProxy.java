@@ -1,4 +1,4 @@
-package com.Luckystar.McMasterAdmin.adaptor;
+package com.Luckystar.McMasterAdmin.ports;
 
 
 import org.springframework.cloud.openfeign.FeignClient;

@@ -1,8 +1,8 @@
 package com.Luckystar.McMasterAdmin.adaptor;
 
 import com.Luckystar.McMasterAdmin.dto.*;
+import com.Luckystar.McMasterAdmin.ports.EmailClientProxy;
 import com.Luckystar.McMasterAdmin.ports.IRestaurantPayrollService;
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;

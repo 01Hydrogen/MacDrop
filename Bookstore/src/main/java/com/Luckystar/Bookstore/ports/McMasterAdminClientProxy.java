@@ -1,4 +1,4 @@
-package com.Luckystar.Bookstore.adapters;
+package com.Luckystar.Bookstore.ports;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;

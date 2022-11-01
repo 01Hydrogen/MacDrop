@@ -1,4 +1,4 @@
-package com.Luckystar.Bookstore.business;
+package com.Luckystar.Bookstore.exception;
 
 public class InvoiceNotFoundException extends RuntimeException{
   public InvoiceNotFoundException(){

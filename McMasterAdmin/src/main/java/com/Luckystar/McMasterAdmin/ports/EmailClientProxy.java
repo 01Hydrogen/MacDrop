@@ -1,4 +1,4 @@
-package com.Luckystar.McMasterAdmin.adaptor;
+package com.Luckystar.McMasterAdmin.ports;
 
 import com.Luckystar.McMasterAdmin.dto.EmailSent;
 import com.Luckystar.McMasterAdmin.dto.EmailServiceDTO;

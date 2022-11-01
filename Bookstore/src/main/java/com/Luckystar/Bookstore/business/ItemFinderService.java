@@ -1,6 +1,7 @@
 package com.Luckystar.Bookstore.business;
 
 import com.Luckystar.Bookstore.business.entities.Item;
+import com.Luckystar.Bookstore.exception.ItemNotFoundException;
 import com.Luckystar.Bookstore.ports.IItemFinderService;
 import com.Luckystar.Bookstore.ports.IItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
