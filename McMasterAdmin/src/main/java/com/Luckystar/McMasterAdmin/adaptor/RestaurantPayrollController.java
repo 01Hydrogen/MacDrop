@@ -57,8 +57,8 @@ public class RestaurantPayrollController {
     /**
      * 向payment service付款，并将明细给餐厅,付款并发送邮件后所有被处理的订单paid改为true
      */
-    @RequestMapping(value = "/payPrice",method = RequestMethod.GET)
-    public void payPrice(String restaurantId){
+    @RequestMapping(value = "/payPrice",method = RequestMethod.POST)
+    public void payPrice(@RequestBody String restaurantId){
         try {
             PayPriceDTO payPriceDTO= restaurantPayrollService.payPrice(restaurantId);
             paymentClientProxy.revenue(payPriceDTO);

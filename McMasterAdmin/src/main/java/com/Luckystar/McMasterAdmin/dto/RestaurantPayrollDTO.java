@@ -16,7 +16,7 @@ public class RestaurantPayrollDTO {
     private String studentId;
 
     @NonNull
-    private List<MenuInfoDTO> menuInfoDTOList; // Json Object:
+    private List<MenuInfoDTO> orderInfo; // Json Object:
     /**
      * String menu_name, Double price, Integer amount, String res_id
      */

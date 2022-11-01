@@ -19,7 +19,6 @@
         <module>Bookstore</module>
         <module>MenuSystem</module>
         <module>UserManagement</module>
-        <module>UserManagement</module>
         <module>Cart</module>
         <module>Delivery</module>
         <module>PaymentSystem</module>

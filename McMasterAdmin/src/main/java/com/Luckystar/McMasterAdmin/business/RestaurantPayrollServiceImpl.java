@@ -37,7 +37,7 @@ public class RestaurantPayrollServiceImpl implements IRestaurantPayrollService {
     public boolean createPayroll(RestaurantPayrollDTO restaurantPayrollDTO) {
         String orderId=restaurantPayrollDTO.getOrderId();
         String studentId=restaurantPayrollDTO.getStudentId();
-        List<MenuInfoDTO> menuInfoDTOList=restaurantPayrollDTO.getMenuInfoDTOList();
+        List<MenuInfoDTO> menuInfoDTOList=restaurantPayrollDTO.getOrderInfo();
         try {
             //遍历menuInfoDTOList生成记录
             for (MenuInfoDTO m:menuInfoDTOList
@@ -47,9 +47,9 @@ public class RestaurantPayrollServiceImpl implements IRestaurantPayrollService {
                 restaurantPayrollEntity.setOrderId(orderId);
                 restaurantPayrollEntity.setStudentId(studentId);
                 //写入MenuInfoDTO内容
-                restaurantPayrollEntity.setRestaurantId(m.getRes_id());
+                restaurantPayrollEntity.setRestaurantId(m.getResId());
                 restaurantPayrollEntity.setPrice(m.getPrice());
-                restaurantPayrollEntity.setMenuName(m.getMenu_name());
+                restaurantPayrollEntity.setMenuName(m.getMenuName());
                 restaurantPayrollEntity.setAmount(m.getAmount());
                 restaurantPayrollEntity.setTotalPrice(m.getPrice()*m.getAmount());
                 restaurantPayrollEntity.setMDDChecked(false);
@@ -60,6 +60,7 @@ public class RestaurantPayrollServiceImpl implements IRestaurantPayrollService {
             e.printStackTrace();
             throw e;
         }
+
         return true;
     }
 

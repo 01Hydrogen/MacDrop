@@ -3,6 +3,7 @@ package com.LuckyStar.TrackingSystem.business;
 import com.LuckyStar.TrackingSystem.business.entities.OrderInfo;
 import com.LuckyStar.TrackingSystem.business.entities.SubOrderInfo;
 import com.LuckyStar.TrackingSystem.dto.*;
+import com.LuckyStar.TrackingSystem.ports.EmailClientProxy;
 import com.LuckyStar.TrackingSystem.ports.IOrderCreateService;
 import com.LuckyStar.TrackingSystem.ports.OrderStatusRepository;
 import com.LuckyStar.TrackingSystem.ports.SubOrderStatusRepository;
@@ -10,9 +11,7 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -20,11 +19,14 @@ public class OrderCreateServiceimpl implements IOrderCreateService {
 
     private final OrderStatusRepository orderStatusRepository;
     private final SubOrderStatusRepository subOrderStatusRepository;
-
+    private final EmailClientProxy emailClientProxy;
+    private final static String MCMASTEREMAIL = "cas@mcmaster.ca";
+    private final static String ORDERCREATEMESSAGE = "your order has been created";
     @Autowired
-    public OrderCreateServiceimpl(OrderStatusRepository orderStatusRepository, SubOrderStatusRepository subOrderStatusRepository) {
+    public OrderCreateServiceimpl(OrderStatusRepository orderStatusRepository, SubOrderStatusRepository subOrderStatusRepository, EmailClientProxy emailClientProxy) {
         this.orderStatusRepository = orderStatusRepository;
         this.subOrderStatusRepository = subOrderStatusRepository;
+        this.emailClientProxy = emailClientProxy;
     }
 
     private boolean exists(OrderInfo order) {
@@ -82,6 +84,9 @@ public class OrderCreateServiceimpl implements IOrderCreateService {
         /**
          * Send Email to student, Notify successful order creation
          */
+
+        EmailRequestDTO emailRequestDTO = new EmailRequestDTO(MCMASTEREMAIL, order.getStudentEmail(), ORDERCREATEMESSAGE, "");
+        emailClientProxy.process(emailRequestDTO);
 
         /**
          * Send selected Time and location to Mcmaster for monitoring purpose

@@ -6,8 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MenuInfoDTO {
-    private String menu_name;
+    private String menuName;
     private double price;
     private int amount;
-    private String res_id;
+    private String resId;
 }

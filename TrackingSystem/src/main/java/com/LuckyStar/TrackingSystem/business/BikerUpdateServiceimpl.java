@@ -2,33 +2,40 @@ package com.LuckyStar.TrackingSystem.business;
 
 import com.LuckyStar.TrackingSystem.business.entities.OrderInfo;
 import com.LuckyStar.TrackingSystem.business.entities.SubOrderInfo;
-import com.LuckyStar.TrackingSystem.dto.BikerSorderUpdateDTO;
-import com.LuckyStar.TrackingSystem.dto.BikerUpdateDTO;
-import com.LuckyStar.TrackingSystem.dto.CompletedOrderDTO;
-import com.LuckyStar.TrackingSystem.dto.ToMacDTO;
-import com.LuckyStar.TrackingSystem.ports.IBikerUpdateService;
-import com.LuckyStar.TrackingSystem.ports.OrderStatusRepository;
-import com.LuckyStar.TrackingSystem.ports.SubOrderStatusRepository;
+import com.LuckyStar.TrackingSystem.dto.*;
+import com.LuckyStar.TrackingSystem.ports.*;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
 public class BikerUpdateServiceimpl implements IBikerUpdateService {
     private OrderStatusRepository orderStatusRepository;
     private final SubOrderStatusRepository subOrderStatusRepository;
+    private final McmasterClientProxy mcmasterClientProxy;
+    private final EmailClientProxy emailClientProxy;
     private final Integer DELIVERINGSTATUS = 3;
     private final Integer DELIVEREDSTATUS = 4;
     private final Integer CLOSESTATUS = 2;
+    private final static String MCMASTEREMAIL = "cas@mcmaster.ca";
+    private final static String STATUSMESSAGE = "your order status has been changed to: ";
+    private final HashMap<Integer, String> STATUS = new HashMap<Integer, String>(){{
+        put(3, "Delivering");
+        put(4, "Delivered");
+        put(2, "Closed");
+    }};
 
     @Autowired
-    public BikerUpdateServiceimpl(OrderStatusRepository orderStatusRepository, SubOrderStatusRepository subOrderStatusRepository) {
+    public BikerUpdateServiceimpl(OrderStatusRepository orderStatusRepository, SubOrderStatusRepository subOrderStatusRepository, McmasterClientProxy mcmasterClientProxy, EmailClientProxy emailClientProxy) {
         this.orderStatusRepository = orderStatusRepository;
         this.subOrderStatusRepository = subOrderStatusRepository;
+        this.mcmasterClientProxy = mcmasterClientProxy;
+        this.emailClientProxy = emailClientProxy;
     }
 
     @Override
@@ -58,6 +65,8 @@ public class BikerUpdateServiceimpl implements IBikerUpdateService {
          * send out Email to student to Notify biker change the status
          */
 
+        emailClientProxy.process(new EmailRequestDTO(MCMASTEREMAIL, order.getStudentEmail(), STATUSMESSAGE + STATUS.get(bikerUpdateDTO.getStatus()), ""));
+
 
         if(bikerUpdateDTO.getStatus() == CLOSESTATUS){
             String closed_orders = order.getCartItems();
@@ -69,6 +78,7 @@ public class BikerUpdateServiceimpl implements IBikerUpdateService {
              */
             Gson gson = new Gson();
             for(String each_restaurantOrder: closed_order){
+                ToMacDTO x = gson.fromJson(each_restaurantOrder, ToMacDTO.class);
                 toMacDTOList.add(gson.fromJson(each_restaurantOrder, ToMacDTO.class));
             }
 
@@ -78,6 +88,7 @@ public class BikerUpdateServiceimpl implements IBikerUpdateService {
              * send CompletedOrderDTO to Mcmaster
              */
 
+            mcmasterClientProxy.createPayroll(completedOrderDTO);
 
         }
     }
@@ -88,6 +99,13 @@ public class BikerUpdateServiceimpl implements IBikerUpdateService {
             throw new SubOrderNotFoundException(bikerSorderUpdateDTO.getSubOrderId());
         }
         subOrderInfo.setStatus(bikerSorderUpdateDTO.getStatus());
+
+        subOrderStatusRepository.save(subOrderInfo);
+        /**
+         * send out Email to student to Notify biker change the status
+         */
+
+        emailClientProxy.process(new EmailRequestDTO(MCMASTEREMAIL, subOrderInfo.getOrderInfo().getStudentEmail(), STATUSMESSAGE + STATUS.get(bikerSorderUpdateDTO.getStatus()), ""));
 
     }
 }
