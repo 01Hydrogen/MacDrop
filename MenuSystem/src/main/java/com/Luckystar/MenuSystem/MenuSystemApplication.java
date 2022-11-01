@@ -1,4 +1,4 @@
-package com.LuckyStar.MenuSystem;
+package com.Luckystar.MenuSystem;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

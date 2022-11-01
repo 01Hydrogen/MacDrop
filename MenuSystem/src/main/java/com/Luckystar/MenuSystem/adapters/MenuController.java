@@ -1,9 +1,9 @@
-package com.LuckyStar.MenuSystem.adapters;
+package com.Luckystar.MenuSystem.adapters;
 
-import com.LuckyStar.MenuSystem.business.entities.Menu;
-import com.LuckyStar.MenuSystem.dto.MenuRegistrationRequest;
-import com.LuckyStar.MenuSystem.ports.MenuFinder;
-import com.LuckyStar.MenuSystem.ports.MenuManagement;
+import com.Luckystar.MenuSystem.business.entities.Menu;
+import com.Luckystar.MenuSystem.dto.MenuRegistrationRequest;
+import com.Luckystar.MenuSystem.ports.MenuFinder;
+import com.Luckystar.MenuSystem.ports.MenuManagement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;

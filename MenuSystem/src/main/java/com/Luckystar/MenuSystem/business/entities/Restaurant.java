@@ -1,4 +1,4 @@
-package com.LuckyStar.MenuSystem.business.entities;
+package com.Luckystar.MenuSystem.business.entities;
 
 
 import lombok.*;

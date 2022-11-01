@@ -1,8 +1,8 @@
-package com.LuckyStar.MenuSystem.business;
+package com.Luckystar.MenuSystem.business;
 
-import com.LuckyStar.MenuSystem.business.entities.Menu;
-import com.LuckyStar.MenuSystem.ports.MenuRepository;
-import com.LuckyStar.MenuSystem.ports.MenuFinder;
+import com.Luckystar.MenuSystem.business.entities.Menu;
+import com.Luckystar.MenuSystem.ports.MenuRepository;
+import com.Luckystar.MenuSystem.ports.MenuFinder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

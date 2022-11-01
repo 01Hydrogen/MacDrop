@@ -1,4 +1,4 @@
-package com.LuckyStar.MenuSystem.business;
+package com.Luckystar.MenuSystem.business;
 
 public class MenuNotFoundException extends RuntimeException{
 

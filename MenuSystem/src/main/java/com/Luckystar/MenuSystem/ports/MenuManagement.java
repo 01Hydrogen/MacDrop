@@ -1,7 +1,7 @@
-package com.LuckyStar.MenuSystem.ports;
+package com.Luckystar.MenuSystem.ports;
 
-import com.LuckyStar.MenuSystem.business.entities.Menu;
-import com.LuckyStar.MenuSystem.dto.MenuRegistrationRequest;
+import com.Luckystar.MenuSystem.business.entities.Menu;
+import com.Luckystar.MenuSystem.dto.MenuRegistrationRequest;
 
 public interface MenuManagement {
     /**

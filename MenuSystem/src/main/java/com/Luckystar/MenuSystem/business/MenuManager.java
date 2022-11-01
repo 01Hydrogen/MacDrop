@@ -1,10 +1,10 @@
-package com.LuckyStar.MenuSystem.business;
+package com.Luckystar.MenuSystem.business;
 
-import com.LuckyStar.MenuSystem.business.entities.Menu;
-import com.LuckyStar.MenuSystem.dto.MenuDeletionRequest;
-import com.LuckyStar.MenuSystem.dto.MenuRegistrationRequest;
-import com.LuckyStar.MenuSystem.ports.MenuManagement;
-import com.LuckyStar.MenuSystem.ports.MenuRepository;
+import com.Luckystar.MenuSystem.business.entities.Menu;
+import com.Luckystar.MenuSystem.dto.MenuDeletionRequest;
+import com.Luckystar.MenuSystem.dto.MenuRegistrationRequest;
+import com.Luckystar.MenuSystem.ports.MenuManagement;
+import com.Luckystar.MenuSystem.ports.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

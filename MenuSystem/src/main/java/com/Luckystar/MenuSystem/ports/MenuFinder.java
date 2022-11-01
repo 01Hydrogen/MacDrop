@@ -1,6 +1,7 @@
-package com.LuckyStar.MenuSystem.ports;
+package com.Luckystar.MenuSystem.ports;
 
-import com.LuckyStar.MenuSystem.business.entities.Menu;
+import com.Luckystar.MenuSystem.business.entities.Menu;
+import com.Luckystar.MenuSystem.business.entities.Menu;
 
 import java.util.List;
 

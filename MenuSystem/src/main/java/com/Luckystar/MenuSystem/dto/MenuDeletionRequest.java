@@ -1,4 +1,4 @@
-package com.LuckyStar.MenuSystem.dto;
+package com.Luckystar.MenuSystem.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;

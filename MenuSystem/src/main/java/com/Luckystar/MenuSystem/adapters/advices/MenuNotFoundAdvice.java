@@ -1,6 +1,6 @@
-package com.LuckyStar.MenuSystem.adapters.advices;
+package com.Luckystar.MenuSystem.adapters.advices;
 
-import com.LuckyStar.MenuSystem.business.MenuNotFoundException;
+import com.Luckystar.MenuSystem.business.MenuNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
