@@ -1,0 +1,99 @@
+services:
+  Bookstore:
+    container_name: bookstore
+      build: ../Bookstore
+      environment:
+        - eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka
+      ports:
+        - "9091:9091"
+      depends_on:
+        - eureka
+
+  Cart:
+    container_name: cart
+    build: ../Cart
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka
+    ports:
+      - "8180:8180"
+    depends_on:
+      - eureka
+
+  Delivery:
+    container_name: delivery
+    build: ../Delivery
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka
+    ports:
+      - "9191:9191"
+    depends_on:
+      - eureka
+
+  EmailService:
+    container_name: email-srv
+    build: ../EmailService
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka
+    ports:
+      - "8888:8888"
+    depends_on:
+      - eureka
+
+  EurekaServer:
+    container_name: eureka
+    build: ../EurekaServer
+    environment:
+      - eureka.instance.ipAddress="127.0.0.1"
+    ports:
+      - "8761:8761"
+
+  McMasterAdmin:
+    container_name: email-srv
+    build: ../McMasterAdmin
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka
+    ports:
+      - "8888:8888"
+    depends_on:
+      - eureka
+
+
+  MenuSystem:
+    container_name: menu
+    build: ../MenuSystem
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka
+    ports:
+      - "8006:8006"
+    depends_on:
+      - eureka
+
+  PaymentSystem:
+    container_name: payment
+    build: ../PaymentSystem
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka
+    ports:
+      - "9190:9190"
+    depends_on:
+      - eureka
+
+  TrackingSystem:
+    container_name: tracking
+    build: ../TrackingSystem
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka
+    ports:
+      - "9290:9290"
+    depends_on:
+      - eureka
+
+  UserManagement:
+    container_name: user
+    build: ../UserManagement
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka
+    ports:
+      - "1919:1919"
+    depends_on:
+      - eureka
