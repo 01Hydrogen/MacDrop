@@ -1,0 +1,26 @@
+server:
+  port: 9191
+
+#spring:
+#  jpa:
+#    show-sql: true
+#
+#
+#    hibernate:
+#      ddl-auto: update
+#    database: h2
+#
+#  datasource:
+#    driver-class-name: org.h2.Driver
+#    url:jdbc:h2: ~/test
+spring:
+  jpa:
+    show-sql: true
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:h2:mem:userdb
+  h2:
+    console:
+      enabled: true

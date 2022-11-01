@@ -6,3 +6,13 @@
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
+
+compiler.xml
+encodings.xml
+jpa-buddy.xml
+misc.xml
+vcs.xml
+runConfifurations.xml
+workspace.xml
+uiDesigner.xml
+jarRepositories.xml

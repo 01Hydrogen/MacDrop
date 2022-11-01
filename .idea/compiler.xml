@@ -2,12 +2,22 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="UserManagement" />
+        <module name="EurekaServer" />
+        <module name="PaymentSystem" />
+        <module name="User" />
         <module name="Bookstore" />
+        <module name="McMasterAdmin" />
+        <module name="UserManagement" />
+        <module name="Delivery" />
+        <module name="EmailService" />
+        <module name="MenuSystem" />
+        <module name="TrackingSystem" />
+        <module name="Cart" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -16,6 +26,16 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Bookstore" options="-parameters" />
+      <module name="Cart" options="-parameters" />
+      <module name="Delivery" options="-parameters" />
+      <module name="EmailService" options="-parameters" />
+      <module name="EurekaServer" options="-parameters" />
+      <module name="McMasterAdmin" options="-parameters" />
+      <module name="MenuSystem" options="-parameters" />
+      <module name="PaymentSystem" options="-parameters" />
+      <module name="TrackingSystem" options="-parameters" />
+      <module name="User" options="-parameters" />
       <module name="UserManagement" options="-parameters" />
     </option>
   </component>
