@@ -5,21 +5,26 @@ import com.LuckyStar.TrackingSystem.business.entities.SubOrderInfo;
 import com.LuckyStar.TrackingSystem.dto.*;
 import com.LuckyStar.TrackingSystem.ports.IOrderCreateService;
 import com.LuckyStar.TrackingSystem.ports.OrderStatusRepository;
+import com.LuckyStar.TrackingSystem.ports.SubOrderStatusRepository;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Service
 public class OrderCreateServiceimpl implements IOrderCreateService {
 
-    private OrderStatusRepository orderStatusRepository;
+    private final OrderStatusRepository orderStatusRepository;
+    private final SubOrderStatusRepository subOrderStatusRepository;
 
     @Autowired
-    public OrderCreateServiceimpl(OrderStatusRepository orderStatusRepository) {
+    public OrderCreateServiceimpl(OrderStatusRepository orderStatusRepository, SubOrderStatusRepository subOrderStatusRepository) {
         this.orderStatusRepository = orderStatusRepository;
+        this.subOrderStatusRepository = subOrderStatusRepository;
     }
 
     private boolean exists(OrderInfo order) {
@@ -48,17 +53,28 @@ public class OrderCreateServiceimpl implements IOrderCreateService {
         }
 
         /**
-         *
+         * first create a single big Order
          */
 
-
         OrderInfo order = new OrderInfo(cartCheckOutDTO.getTransactionId(), cartCheckOutDTO.getUserId(), cartCheckOutDTO.getUserEmail(),
-                null, res_ids, new Date(), null,cartCheckOutDTO.getTotalPrice(), 0, cart_items, "ITB212", 1, new SubOrderInfo());
+                null, res_ids, new Date(), null,cartCheckOutDTO.getTotalPrice(), 0, cart_items, "ITB212", 1);
         if(exists(order)) {
             throw new IllegalArgumentException("Order Already exists");
         }
         OrderInfo saved = orderStatusRepository.save(order);
 
+        /**
+         * Next, we divide a big Order into subOrders and store each SubOrder into our SubOrderInfo
+         */
+        OrderInfo orderInfo = new OrderInfo();
+        for(ResOrdersDTO restaurant: cartCheckOutDTO.getRestaurantOrders()){
+            for(CartPriceDTO carts: restaurant.getCarts()){
+                ToMacDTO toMacDTO = new ToMacDTO(carts.getName(),carts.getPrice(), carts.getAmount(), carts.getResId());
+                SubOrderInfo subOrderInfo = new SubOrderInfo(carts.getPrice(), carts.getAmount(), carts.getResId(), null, 0);
+                subOrderInfo.setOrderInfo(saved);
+                subOrderStatusRepository.save(subOrderInfo);
+            }
+        }
 
 
         /**

@@ -37,10 +37,12 @@ public class TrackingController {
     public List<OrderInfo> findAll(){
         return iOrderFinderService.findAll();
     }
-    @GetMapping(ENDPOINT + "/pendings")
-    public List<OrderInfo> findAllPendings(){
-        return iOrderFinderService.findAllPendings();
-    }
+
+    /**
+     * Biker will call this API and find all pending orders
+     * @param status
+     * @return
+     */
     @GetMapping(ENDPOINT + "/status" + "/{status}")
     public List<OrderInfo> findAllByStatus(@PathVariable Integer status){
         return iOrderFinderService.findAllByStatus(status);

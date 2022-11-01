@@ -1,11 +1,13 @@
 package com.LuckyStar.TrackingSystem.business.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -42,7 +44,7 @@ public class OrderInfo {
   private Date deliveredTime;
   private @NonNull Double totalPrice;
   /**
-   * -1 = rejected, 0 = created, 1 = preparing, 2 =  order ready to be picked up, 3 = biker delivering, 4 = order delivered, 5 = order close
+   * 0 = created, 1 = pending, 2 order delivered, 3 = order close
    */
   private @NonNull int status;
   @NonNull @Column(name = "carts_item", length = 2000)
@@ -52,10 +54,13 @@ public class OrderInfo {
   @Column(name="delivered_timeslot")
   private @NonNull int deliveredTimeSlot;     //index0-5 from 11am to 4pm
 
+  /**
+   * this is just a relation defined in here, indicating there is a mappiong relation to SubOrderinfo table, it does nothing to our db, wont change column
+   */
   @NonNull
-  @OneToMany @JoinColumn(name = "subOrderInfo_id")
-  private SubOrderInfo subOrderInfo;
-  public OrderInfo(@NonNull String transactionId, @NonNull String studentId, @NonNull String studentEmail,String bikerId, @NonNull String resId ,@NonNull Date createdTime, Date deliveredTime, @NonNull Double totalPrice, @NonNull int status, @NonNull String cartItems, @NonNull String deliveredLocation, @NonNull int deliveredTimeSlot, @NonNull SubOrderInfo subOrderInfo) {
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "orderInfo")
+  private List<SubOrderInfo> subOrderInfo;
+  public OrderInfo(@NonNull String transactionId, @NonNull String studentId, @NonNull String studentEmail,String bikerId, @NonNull String resId ,@NonNull Date createdTime, Date deliveredTime, @NonNull Double totalPrice, @NonNull int status, @NonNull String cartItems, @NonNull String deliveredLocation, @NonNull int deliveredTimeSlot) {
     this.transactionId = transactionId;
     this.studentId = studentId;
     this.studentEmail = studentEmail;
@@ -68,6 +73,5 @@ public class OrderInfo {
     this.cartItems = cartItems;
     this.deliveredLocation = deliveredLocation;
     this.deliveredTimeSlot = deliveredTimeSlot;
-    this.subOrderInfo = subOrderInfo;
   }
 }

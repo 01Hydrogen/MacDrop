@@ -20,12 +20,8 @@ public class OrderFinderServiceimpl implements IOrderFinderService {
     }
 
     @Override
-    public List<OrderInfo> findAllPendings() {
-        return orderStatusRepository.findAllByStatus(PENDING);
-    }
-
-    @Override
     public List<OrderInfo> findAllByStatus(int status) {
+
         return orderStatusRepository.findAllByStatus(status);
     }
 

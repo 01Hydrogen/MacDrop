@@ -6,7 +6,6 @@ import com.querydsl.core.types.Order;
 import java.util.List;
 
 public interface IOrderFinderService {
-    List<OrderInfo> findAllPendings();
     List<OrderInfo> findAllByStatus(int status);
     List<OrderInfo> findAllByResId(String res_id);
     List<OrderInfo> findAllByBikerId(String biker_id);
